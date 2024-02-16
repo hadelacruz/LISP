@@ -1,0 +1,80 @@
+// Clase interna para representar tokens
+public class Token {
+    
+    // Enumeración para tipos de tokens
+    enum TokenType {
+        IDENTIFIER, NUMBER, PARENTESIS_APERTURA, PARENTESIS_CIERRE, UNKNOWN, 
+        ATOM, DEFUN, COND, LIST, EQUAL, SETQ, MAYORQUE, MENORQUE, SUMA, 
+        RESTA, MULTIPLICACION, DIVISION
+    }
+
+    // Atributos de un token
+    TokenType type;
+    String value;
+
+    Token(TokenType type, String value) {
+        this.type = type;
+        this.value = value;
+    }
+
+    // Método para evaluar el tipo de token
+    public static TokenType guessTokenType(String token) {
+        if (token.matches("-?\\d+(\\.\\d+)?")) {
+            return TokenType.NUMBER;
+
+        } else if (token.matches("(?i)atom")) {
+            return TokenType.ATOM;
+
+        } else if (token.matches("(?i)defun")) {
+            return TokenType.DEFUN;
+
+        } else if (token.matches("(?i)cond")) {
+            return TokenType.COND;
+
+        } else if (token.matches("(?i)list")) {
+            return TokenType.LIST;
+
+        } else if (token.matches("(?i)equal")) {
+            return TokenType.EQUAL;
+
+        } else if (token.matches("(?i)setq")) {
+            return TokenType.SETQ;
+
+        } else if (token.matches("(?i)>")) {
+            return TokenType.MAYORQUE;
+
+        } else if (token.matches("(?i)<")) {
+            return TokenType.MENORQUE;
+
+        } else if (token.matches("\\+")) {
+            return TokenType.SUMA;
+
+        } else if (token.matches("\\-")) {
+            return TokenType.RESTA;
+
+        } else if (token.matches("\\*")) {
+            return TokenType.MULTIPLICACION;
+
+        } else if (token.matches("\\/")) {
+            return TokenType.DIVISION;
+
+        } else if (token.matches("\\(")) {
+            return TokenType.PARENTESIS_APERTURA;
+
+        } else if (token.matches("\\)")) {
+            return TokenType.PARENTESIS_CIERRE;
+
+        } else if (token.matches("[a-zA-Z][-a-zA-Z0-9_]*")) {
+            return TokenType.IDENTIFIER;
+
+        } else {
+            return TokenType.UNKNOWN;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%s, %s)", type, value);
+    }
+
+}
