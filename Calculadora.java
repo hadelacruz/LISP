@@ -5,7 +5,7 @@ public class Calculadora {
     /*
      * (COND (< 5 3) )
      */
-    public static void calculadoraOperaciones (String input){
+    public static String calculadoraOperaciones (String input){
         Stack<String> stack = new Stack<>();
 
         // Iterar sobre cada carácter en la cadena
@@ -15,31 +15,40 @@ public class Calculadora {
                 if (c != ')'){
                     stack.push(String.valueOf(c));
                 }else{
-                    int valor1 = Integer.parseInt(stack.pop());
-                    int valor2 = Integer.parseInt(stack.pop());
-                    String operador = stack.pop();
-                    // Sacando de la pila paréntesis de apertura
-                    stack.pop();
-                    switch (operador) {
-                        case "+":
-                            stack.push(String.valueOf(valor2 + valor1));    
-                            break;
+                    try {
+                        int valor1 = Integer.parseInt(stack.pop());
+                        int valor2 = Integer.parseInt(stack.pop());
+                        String operador = stack.pop();
+                        // Sacando de la pila paréntesis de apertura
+                        stack.pop();
+                        switch (operador) {
+                            case "+":
+                                stack.push(String.valueOf(valor2 + valor1));    
+                                break;
+    
+                            case "-":
+                                stack.push(String.valueOf(valor2 - valor1)); 
+                                break;
+                            
+                            case "/":
+                                stack.push(String.valueOf(valor2 / valor1));                    
+                                break;
+    
+                            case "*":
+                                stack.push(String.valueOf(valor2 * valor1));                 
+                                break;
+                        }
 
-                        case "-":
-                            stack.push(String.valueOf(valor2 - valor1)); 
-                            break;
+                        return stack.pop();
                         
-                        case "/":
-                            stack.push(String.valueOf(valor2 / valor1));                    
-                            break;
-
-                        case "*":
-                            stack.push(String.valueOf(valor2 * valor1));                 
-                            break;
+                    } catch (Exception e) {
+                        System.out.println("¡Sintaxis inválida!");
+                        
                     }
                 }
             }
         }
-        System.out.println("El resultado es: " + stack.pop());
+        return "";
+        //System.out.println("El resultado es: " + stack.pop());
     }
 }
