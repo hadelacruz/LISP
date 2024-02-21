@@ -51,14 +51,21 @@ public class Interprete {
             // Validar que tipo de token es y en base a eso validar que hacer.
             switch (token.type) {
                 case OPERADOR: // Case cuando por identifica que viene un operador aritmético.
-                    caseEvaluated = true;
                     StringBuilder cadenaResultante = new StringBuilder();
                     for (Token elemento : tokens) {
                         cadenaResultante.append(elemento.value);
                     }
-                    
+                    caseEvaluated = true;
                     // Se imprime el resultado de la operación aritmética.
                     System.out.println(Calculadora.calculadoraOperaciones(String.valueOf(cadenaResultante)));
+                    break;
+
+                case SETQ:
+                    //Sintaxis de la declaración de una variale "SETQ"
+                    Instrucciones.sintaxisSetq(tokens);
+                    
+
+                
                     break;
                     
             }

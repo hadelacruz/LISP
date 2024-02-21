@@ -5,11 +5,11 @@ public class Token {
     enum TokenType {
         IDENTIFIER, NUMBER, PARENTESIS_APERTURA, PARENTESIS_CIERRE, UNKNOWN, 
         ATOM, DEFUN, COND, LIST, EQUAL, SETQ, MAYORQUE, MENORQUE, SUMA, 
-        RESTA, MULTIPLICACION, DIVISION, OPERADOR
+        RESTA, MULTIPLICACION, DIVISION, OPERADOR, BOOLEAN
     }
 
     // Atributos de un token
-    TokenType type;
+    Token.TokenType type;
     String value;
 
     Token(TokenType type, String value) {
@@ -58,6 +58,9 @@ public class Token {
         } else if (token.matches("[a-zA-Z][-a-zA-Z0-9_]*")) {
             return TokenType.IDENTIFIER;
 
+        } else if (token.matches("t\\bnil")) {
+            return TokenType.BOOLEAN;
+
         } else {
             return TokenType.UNKNOWN;
         }
@@ -66,6 +69,10 @@ public class Token {
     @Override
     public String toString() {
         return String.format("(%s, %s)", type, value);
+    }
+
+    public TokenType getType() {
+        return type;
     }
 
 }

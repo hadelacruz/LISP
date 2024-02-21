@@ -24,4 +24,16 @@ public class Variable<T> {
         this.value = value;
     }
 
+
+    @Override
+    public String toString() {
+        return "{" +
+            " name='" + getName() + "'" +
+            ", value='" + getValue() + "'" +
+            "}";
+    }
+
+
+    
+
 }
