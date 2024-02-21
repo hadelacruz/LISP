@@ -56,6 +56,7 @@ public class Interprete {
                     for (Token elemento : tokens) {
                         cadenaResultante.append(elemento.value);
                     }
+                    
                     // Se imprime el resultado de la operación aritmética.
                     System.out.println(Calculadora.calculadoraOperaciones(String.valueOf(cadenaResultante)));
                     break;
