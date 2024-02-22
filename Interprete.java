@@ -63,9 +63,6 @@ public class Interprete {
                 case SETQ:
                     //Sintaxis de la declaración de una variale "SETQ"
                     Instrucciones.sintaxisSetq(tokens);
-                    
-
-                
                     break;
                     
             }

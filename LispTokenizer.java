@@ -26,6 +26,7 @@ public class LispTokenizer {
                     // Agregar paréntesis como token
                     tokens.add(new Token(Token.TokenType.PARENTESIS_CIERRE, String.valueOf(c)));
                 }
+
             } else {
                 // Acumular caracteres para el próximo token
                 tokenBuilder.append(c);

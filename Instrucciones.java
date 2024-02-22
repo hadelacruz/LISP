@@ -11,48 +11,59 @@ public class Instrucciones {
         Stack<Token> stack = new Stack<>();
         try {
             for (Token elemento : tokens) {
-                
-                if (!elemento.value.equals(")")) {// (+ (- 2 3) 5)
+                if (!elemento.value.equals(")")) {
                     stack.push(elemento);
-
                 } else {
+
+                    Token nombreVariable;
                     Token valorVariable = stack.pop();
-                    switch (valorVariable.type) {
-                        case IDENTIFIER: //String
-                            
-                            break;
-                        case UNKNOWN:
-                            
-                            break;
-                        case NUMBER:
-                            //Validar sintaxis de SETQ
-                            Token nombreVariable = stack.pop();
-                            if(nombreVariable.type == Token.guessTokenType("IDENTIFIER")){                                
-                                if(stack.pop().type == Token.guessTokenType("SETQ")){
 
-                                    if(stack.pop().value.equals("(")){
-                                        //Crear la variable y almacenarlo en la lista de variables
-                                        listasDeVariables.add(new Variable(nombreVariable.value, Integer.parseInt(valorVariable.value)));
-                                        System.out.println(listasDeVariables.toString());
-                                        System.out.println("Variable guardado exitosamente");
-                                        
-                                    }else System.out.println("¡Sintaxis de SETQ Inválida!");       
-                                }else{
-                                    System.out.println("¡Sintaxis de SETQ Inválida!");
+                    //Validar sintaxis de SETQ
+                    nombreVariable = stack.pop();
+                
+                    if(nombreVariable.type == Token.guessTokenType("IDENTIFIER")){                                
+                        if(stack.pop().type == Token.guessTokenType("SETQ")){
+
+                            if(stack.pop().value.equals("(")){
+                                //validar que la variable no exista
+                                boolean verficador = false;
+                                for (Variable i : listasDeVariables) {
+                                    if(i.getName().equals(nombreVariable.value)) verficador = true; //El nombre de la variable ya existe
                                 }
-                            }else{
-                                System.out.println("¡Sintaxis de SETQ Inválida!");
-                            }
-                            
-                        break;
-                    
-                        default:
-                            break;
+                                //Crear la variable y almacenarlo en la lista de variables
+                                if(verficador == false){
+                                    switch (valorVariable.type) { //Validar qué tipo de dato es la variable
+                                        case NUMBER: 
+                                            listasDeVariables.add(new Variable(nombreVariable.value, Integer.parseInt(valorVariable.value)));
+                                            //System.out.println(listasDeVariables.toString());
+                                            System.out.println("Variable guardado exitosamente");
+                                            break;
+
+                                        case BOOLEAN:
+                                            listasDeVariables.add(new Variable(nombreVariable.value, valorVariable.value));
+                                            //System.out.println(listasDeVariables.toString());
+                                            System.out.println("Variable guardado exitosamente");
+                                            break;
+                                    
+                                        case STRING:
+                                            listasDeVariables.add(new Variable(nombreVariable.value, valorVariable.value));
+                                            //System.out.println(listasDeVariables.toString());
+                                            System.out.println("Variable guardado exitosamente");
+                                            break;
+
+                                        default:
+                                            System.out.println("Tipo de dato no válido");
+                                            break;
+                                    }
+                                          
+                                }else System.out.println("¡La variable '" + nombreVariable.value + "' ya existe!");
+                            }else System.out.println("¡Sintaxis de SETQ Inválida!");       
+                        }else{
+                            System.out.println("¡Sintaxis de SETQ Inválida!");
+                        }
+                    }else{
+                        System.out.println("¡Sintaxis de SETQ Inválida!");
                     }
-
-
-
-
                 }
                 
             }
