@@ -64,7 +64,9 @@ public class Interprete {
                     //Sintaxis de la declaración de una variale "SETQ"
                     Instrucciones.sintaxisSetq(tokens);
                     break;
-                    
+                case QUOTE:
+                    Instrucciones.quote(tokens);
+                    break;
             }
 
             // Si entro a un caso del switch salir del bucle FOR.
