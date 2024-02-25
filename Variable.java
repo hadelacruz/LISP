@@ -2,7 +2,6 @@ public class Variable<T> {
     private String name;
     private T value;
 
-
     public Variable(String name, T value) {
         this.name = name;
         this.value = value;
@@ -24,7 +23,6 @@ public class Variable<T> {
         this.value = value;
     }
 
-
     @Override
     public String toString() {
         return "{" +
@@ -32,8 +30,4 @@ public class Variable<T> {
             ", value='" + getValue() + "'" +
             "}";
     }
-
-
-    
-
 }

@@ -40,5 +40,4 @@ public class LispTokenizer {
 
         return tokens;
     }
-
 }

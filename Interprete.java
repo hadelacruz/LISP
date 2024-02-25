@@ -67,14 +67,15 @@ public class Interprete {
                 case QUOTE:
                     Instrucciones.quote(tokens);
                     break;
+                case COND:
+                    Conditionals.sintaxCond(tokens);
+                    break;
             }
 
             // Si entro a un caso del switch salir del bucle FOR.
             if (caseEvaluated){
                 break;
             }
-            
         }
     }
-
 }

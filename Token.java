@@ -61,13 +61,16 @@ public class Token {
         } else if (token.matches("[a-zA-Z][-a-zA-Z0-9_]*")) {
             return TokenType.IDENTIFIER;
 
-
         } else if (token.matches("^\"[^\"]*\"$")) {
             return TokenType.STRING;
 
         }else if(token.matches("(?i)quote")){
             return TokenType.QUOTE;
+        
+        }else if(token.matches("\\(cond\\s+\\(.*?\\s+\".*?\"\\)\\s*\\)+")){
+            return TokenType.COND;
         }
+        
         else {
             return TokenType.UNKNOWN;
         }
@@ -81,5 +84,4 @@ public class Token {
     public TokenType getType() {
         return type;
     }
-
 }
