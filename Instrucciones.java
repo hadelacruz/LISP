@@ -77,63 +77,26 @@ public class Instrucciones {
 
     }
 
-    public static<T> void quote(List<Token> tokens) {
-        Stack<Token> pila = new Stack<>();
-        ArrayList<Token> parentesis = new ArrayList<>();
-        ArrayList<Token> resultado = new ArrayList<>();
-        ArrayList<Token> valida = new ArrayList<>();
-        valida.addAll(tokens);
-        if(valida.get(1).type== Token.guessTokenType("QUOTE")){
-            for(Token p : tokens){
-                if( p.value.equals(")") || p.value.equals("(")){
-                    parentesis.add(p);
-                }
+    public static<T> void sintaxisQuote(List<Token> tokens) {
+        ArrayList<Token> lista = new ArrayList<>(tokens);
+        int cont = 0;
+        for (Token pa : tokens) {
+            if (pa.value.equals("(") || pa.value.equals(")")) {
+                cont++;
             }
-            for(Token element: tokens){
-                if(!element.value.equals(")")){
-                    pila.push(element);
-                }else{
-                    Token value=pila.pop();
-                    for(Token caracter: pila){
-                        caracter=value;
-                        if(value.type!=Token.guessTokenType("QUOTE")){
-                            resultado.add(value);
-
-                        }
-                    }
-                    Collections.reverse(resultado);
-                    if(parentesis.size()>2){
-                        System.out.println("(");
-                        for(Token elemento: resultado){
-                            System.out.println(elemento + " ");
-
-                        }
-                        System.out.println(")");
-
-                    }else{
-                        for(Token elemento: resultado){
-                            System.out.println(elemento + " ");
-
-                        }
-
-                    }
-
-
-
-                }
-                }
-
-            }else{
-            System.out.println("ERROR DE SINTAXIS");
-
-
         }
-
-
-
+        if (cont % 2 == 0) {
+            if (lista.get(1).getType() == Token.guessTokenType("QUOTE")) {
+                for (int i = 2; i < lista.size() - 1; i++) {
+                    // Imprimir el elemento en la posición i
+                    System.out.println(lista.get(i));
                 }
-
-        }
+            } else {
+                System.out.println("El token en la posición 1 no es 'quote' o la lista no tiene suficientes elementos.");
+            }
+        } else {
+            System.out.println("SINTAXIS INVALIDA ");
+        }}}
 
 
         /*

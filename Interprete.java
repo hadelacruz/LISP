@@ -65,11 +65,15 @@ public class Interprete {
                     Instrucciones.sintaxisSetq(tokens);
                     break;
                 case QUOTE:
-                    Instrucciones.quote(tokens);
+                    Instrucciones.sintaxisQuote(tokens);
                     break;
                 case COND:
-                    Conditionals.sintaxCond(tokens);
+                    //Conditionals.sintaxCond(tokens);
                     break;
+                case EQUAL:
+                    Predicados.sintaxisequal(tokens);
+                    break;
+
             }
 
             // Si entro a un caso del switch salir del bucle FOR.

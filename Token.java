@@ -5,7 +5,7 @@ public class Token {
     enum TokenType {
         IDENTIFIER, NUMBER, PARENTESIS_APERTURA, PARENTESIS_CIERRE, UNKNOWN, 
         ATOM, DEFUN, COND, LIST, EQUAL, SETQ, MAYORQUE, MENORQUE, SUMA,QUOTE,
-        RESTA, MULTIPLICACION, DIVISION, OPERADOR, BOOLEAN, STRING
+        RESTA, MULTIPLICACION, DIVISION, OPERADOR, BOOLEAN, STRING,LISTA
     }
 
     // Atributos de un token
@@ -67,11 +67,10 @@ public class Token {
         }else if(token.matches("(?i)quote")){
             return TokenType.QUOTE;
         
-        }else if(token.matches("\\(cond\\s+\\(.*?\\s+\".*?\"\\)\\s*\\)+")){
+        }else if(token.matches("\\(cond\\s+\\(.*?\\s+\".*?\"\\)\\s*\\)+")) {
             return TokenType.COND;
-        }
-        
-        else {
+
+        }else {
             return TokenType.UNKNOWN;
         }
     }
