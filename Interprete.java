@@ -61,19 +61,19 @@ public class Interprete {
                     break;
 
                 case SETQ:
-                    //Sintaxis de la declaración de una variale "SETQ"
+                    // Sintaxis de la declaración de una variale "SETQ"
                     Instrucciones.sintaxisSetq(tokens);
                     break;
                 case QUOTE:
                     Instrucciones.quote(tokens);
                     break;
                 case COND:
-                    Conditionals.sintaxCond(tokens);
-                    break;
+                    Conditionals.sintaxisCond(tokens);
+                break;
             }
 
             // Si entro a un caso del switch salir del bucle FOR.
-            if (caseEvaluated){
+            if (caseEvaluated) {
                 break;
             }
         }
