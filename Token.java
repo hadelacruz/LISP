@@ -19,8 +19,11 @@ public class Token {
 
     // Método para evaluar el tipo de token
     public static TokenType guessTokenType(String token) {
+
         if (token.matches("-?\\d+(\\.\\d+)?")) {
             return TokenType.NUMBER;
+        }else if(token.matches("(?i)quote")){
+            return TokenType.QUOTE;
 
         } else if (token.matches("(?i)atom")) {
             return TokenType.ATOM;
@@ -67,8 +70,7 @@ public class Token {
         } else if (token.matches("^\"[^\"]*\"$")) {
             return TokenType.STRING;
 
-        }else if(token.matches("(?i)quote")){
-            return TokenType.QUOTE;
+        
         } else {
             return TokenType.UNKNOWN;
         }

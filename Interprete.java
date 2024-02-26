@@ -65,8 +65,13 @@ public class Interprete {
                     Instrucciones.sintaxisSetq(tokens);
                     break;
                 case QUOTE:
+
                     Instrucciones.sintaxisQuote(tokens);
                     break;
+                case EQUAL:
+                    Predicados.sintaxisequal(tokens);
+                    break;
+
                 case COND:
                     Conditionals.sintaxisCond(tokens);
                 break;
