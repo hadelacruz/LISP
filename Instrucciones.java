@@ -19,6 +19,7 @@ public class Instrucciones {
                     Token valorVariable = stack.pop();
 
                     // Validar sintaxis de SETQ
+                    // Validar sintaxis de SETQ
                     nombreVariable = stack.pop();
 
                     if (nombreVariable.type == Token.guessTokenType("IDENTIFIER")) {
@@ -26,18 +27,20 @@ public class Instrucciones {
 
                             if (stack.pop().value.equals("(")) {
                                 // validar que la variable no exista
+                                // validar que la variable no exista
                                 boolean verficador = false;
                                 for (Variable i : listasDeVariables) {
                                     if (i.getName().equals(nombreVariable.value))
                                         verficador = true; // El nombre de la variable ya existe
+                                        verficador = true; // El nombre de la variable ya existe
                                 }
+                                // Crear la variable y almacenarlo en la lista de variables
                                 // Crear la variable y almacenarlo en la lista de variables
                                 if (verficador == false) {
                                     switch (valorVariable.type) { // Validar qué tipo de dato es la variable
                                         case NUMBER:
-                                            listasDeVariables.add(new Variable(nombreVariable.value,
-                                                    Integer.parseInt(valorVariable.value)));
-                                            // System.out.println(listasDeVariables.toString());
+                                            listasDeVariables.add(new Variable(nombreVariable.value, Integer.parseInt(valorVariable.value)));
+                                            //System.out.println(listasDeVariables.toString());
                                             System.out.println("Variable guardado exitosamente");
                                             break;
 
@@ -84,6 +87,7 @@ public class Instrucciones {
             if (pa.value.equals("(") || pa.value.equals(")")) {
                 cont++;
             }
+        }
             if (cont % 2 == 0) {
                 if (lista.get(1).getType() == Token.guessTokenType("QUOTE")) {
                     for (int i = 2; i < lista.size() - 1; i++) {
@@ -97,83 +101,104 @@ public class Instrucciones {
                 System.out.println("SINTAXIS INVALIDA ");
             }
         }
-    }
-}
+    }   
+            /*
+        if(valida.get(1).type== Token.guessTokenType("QUOTE")){
+            for(Token p : tokens){
+                if( p.value.equals(")") || p.value.equals("(")){
+                    parentesis.add(p);
+                }
+            }
+            for(Token element: tokens){
+                if(!element.value.equals(")")){
+                    pila.push(element);
+                }else{
+                    Token value=pila.pop();
+                    for(Token caracter: pila){
+                        caracter=value;
+                        if(value.type!=Token.guessTokenType("QUOTE")){
+                            resultado.add(value);
 
-/*
- * }
- * Collections.reverse(resultado);
- * if (parentesis.size() > 2) {
- * System.out.println("(");
- * for (Token elemento : resultado) {
- * System.out.println(elemento + " ");
- * 
- * }
- * System.out.println(")");
- * 
- * } else {
- * for (Token elemento : resultado) {
- * System.out.println(elemento + " ");
- * 
- * }
- * 
- * }
- * 
- * }
- * }
- * 
- * } else {
- * System.out.println("ERROR DE SINTAXIS");
- * 
- * }
- * 
- * }
- * 
- * }
- * 
- * /*
- * if(valida.get(1).type== Token.guessTokenType("QUOTE")){
- * 
- * }
- * for(Token caracter: tokens){
- * if(caracter.value.equals("(") || caracter.value.equals(")")){
- * parentesis.add(caracter);
- * }else{
- * pila.push(caracter);
- * }
- * if(parentesis.size()%2==0){
- * for(Token element:pila){
- * pila.pop();
- * if(pila.pop().type!= Token.guessTokenType("QUOTE")){
- * resultado.add(pila.pop());
- * }
- * }
- * Collections.reverse(resultado);
- * if(parentesis.size()>2){
- * System.out.println("(");
- * for(Token elemento: resultado){
- * System.out.println(elemento + " ");
- * 
- * }
- * System.out.println(")");
- * 
- * }else{
- * for(Token elemento: resultado){
- * System.out.println(elemento + " ");
- * 
- * }
- * 
- * }
- * 
- * 
- * 
- * }else{
- * System.out.println("ERROR DE SINTAXIS");
- * }
- * 
- * }
- * 
- * 
- * }
- * }
- */
+                        }
+                    }
+                    Collections.reverse(resultado);
+                    if(parentesis.size()>2){
+                        System.out.println("(");
+                        for(Token elemento: resultado){
+                            System.out.println(elemento + " ");
+
+                        }
+                        System.out.println(")");
+
+                    }else{
+                        for(Token elemento: resultado){
+                            System.out.println(elemento + " ");
+
+                        }
+
+                    }
+
+
+
+                }
+                }
+
+            }else{
+            System.out.println("ERROR DE SINTAXIS");
+
+
+        }
+
+
+
+                }
+
+        }
+
+
+        /*
+        if(valida.get(1).type== Token.guessTokenType("QUOTE")){
+
+        }
+        for(Token caracter: tokens){
+            if(caracter.value.equals("(") || caracter.value.equals(")")){
+                parentesis.add(caracter);
+            }else{
+                pila.push(caracter);
+            }
+            if(parentesis.size()%2==0){
+                for(Token element:pila){
+                    pila.pop();
+                    if(pila.pop().type!= Token.guessTokenType("QUOTE")){
+                        resultado.add(pila.pop());
+                    }
+                }
+                Collections.reverse(resultado);
+                if(parentesis.size()>2){
+                    System.out.println("(");
+                    for(Token elemento: resultado){
+                        System.out.println(elemento + " ");
+
+                    }
+                    System.out.println(")");
+
+                }else{
+                    for(Token elemento: resultado){
+                        System.out.println(elemento + " ");
+
+                    }
+
+                }
+
+
+
+            }else{
+                System.out.println("ERROR DE SINTAXIS");
+            }
+
+        }
+
+
+    }
+}*/
+
