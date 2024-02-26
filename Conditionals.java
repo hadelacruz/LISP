@@ -1,69 +1,75 @@
 import java.util.List;
-import java.util.function.Predicate;
-import java.lang.Object;
+import java.util.Stack;
 
+public class Conditionals {
 
-/**
- * Referencia de: http://arantxa.ii.uam.es/~rcobos/teaching/esp/ia/lisp0.pdf
- * Referencia de: https://www.manualweb.net/java/operadores-condicionales-java/
- */
+    public static void sintaxisCond(List<Token> tokens) {
+        Stack<Token> monton = new Stack<>();
 
- /**
-public class Cond extends AbstractFuncion{
+        try {
+            for (Token elemento : tokens) {
+                if (!elemento.value.equals(")")) {
+                    monton.push(elemento);
+                } else {
+                    if (monton.size() >= 2 && monton.elementAt(monton.size() - 2).value.equals(")")) {
+                        // Dos paréntesis de cierre seguidos indican el final de una expresión
+                        // condicional
+                        System.out.println("Fin de la expresión condicional");
+                        break;
+                    }
 
-    
-     * @param comparacion compara la operacion aritmetica
-     * @param a entero representativo del primer valor en comparar
-     * @param b entero representativo del segundo valor en comparar
-     * @return retorna un objeto String
-     
-    public static String cond(String comparacion, int a, int b) {
-        switch(comparacion) {
-            case ">":
-                if (a > b) {
-                    return "mayor";
-                } else {
-                    return "menor";
-                }
-            case "<":
-                if (a < b) {
-                    return "mayor";
-                } else {
-                    return "menor";
-                }
-            case ">=":
-                if (a >= b) {
-                    return "mayor";
-                } else {
-                    return "menor";
-                }
-            case "<=":
-                if (a <= b) {
-                    return "mayor";
-                } else {
-                    return "menor";
-                }
-            case "=":
-                if (a == b) {
-                    return "mayor";
-                } else {
-                    return "menor";
-                }
-            default:
-                return "Error";
+                    Token b = monton.pop();
+                    Token a = monton.pop();
+                    Token comparador = monton.pop();
+
+                    // Verificar que a y b no sean paréntesis ni la palabra "cond"
+                    if (a.type != Token.TokenType.PARENTESIS_APERTURA &&
+                            a.type != Token.TokenType.PARENTESIS_CIERRE &&
+                            !a.value.equalsIgnoreCase("cond") &&
+                            b.type != Token.TokenType.PARENTESIS_APERTURA &&
+                            b.type != Token.TokenType.PARENTESIS_CIERRE &&
+                            !b.value.equalsIgnoreCase("cond")) {
+                        /* 
+                        System.out.println("a:" + a);
+                        System.out.println("b:" + b);
+                        System.out.println("comparador:" + comparador);
+                        */
+
+                        // Convertir los valores de a y b a enteros
+                        int valorA = Integer.parseInt(a.value);
+                        int valorB = Integer.parseInt(b.value);
+
+                        // Evaluar la comparación
+                        boolean resultado = false;
+                        if (comparador.value.equals(">")) {
+                            resultado = valorA > valorB;
+                        } else if (comparador.value.equals("<")) {
+                            resultado = valorA < valorB;
+                        } else if (comparador.value.equals("=")) {
+                            resultado = valorA == valorB;
+                        }
+
+                        // Imprimir el resultado
+                        System.out.println("Resultado de la comparación: " + resultado);
+                    } else {
+                        System.out.println("Variable inválida: " + a.value);
+                        System.out.println("Variable inválida: " + b.value);
+                    }
+
+                    // Al llegar al cierre de paréntesis, evaluamos la condición
+                    // El formato esperado es (cond (condición resultado) (condición resultado) ...)
+                    if (monton.pop().type == Token.guessTokenType("COND")) {
+                        if (!monton.isEmpty() && monton.peek().value.equals("(")) {
+                            // Sintaxis de COND correcta
+                            System.out.println("Sintaxis de COND correcta");
+                        } else {
+                            System.out.println("¡Sintaxis de COND inválida!");
+                        }
+                    }
+                }                    
+            }
+        } catch (Exception e) {
+            //System.out.println("¡Sintaxis inválida!");
         }
     }
-
-    /**
-     * @param line recibe una linea de codigo
-     * @return regresa una cadena de texto con el resultao
-     
-    public String ejecutar(String line){
-        String example = "(cond > 5 3)";
-        line = line.substring(1, line.length()-1);
-        line = line.replace("cond ","");
-        String[] things = line.split(" ");
-        return cond(things[0],Integer.parseInt(things[1]),Integer.parseInt(things[2]));
-    }
 }
-*/
