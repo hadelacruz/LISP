@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Instrucciones {
 
-    static ArrayList<Variable> listasDeVariables = new ArrayList<>();
+    public static ArrayList<Variable> listasDeVariables = new ArrayList<>();
 
     public static <T> void sintaxisSetq(List<Token> tokens) {
         Stack<Token> stack = new Stack<>();
@@ -31,7 +31,6 @@ public class Instrucciones {
                                 boolean verficador = false;
                                 for (Variable i : listasDeVariables) {
                                     if (i.getName().equals(nombreVariable.value))
-                                        verficador = true; // El nombre de la variable ya existe
                                         verficador = true; // El nombre de la variable ya existe
                                 }
                                 // Crear la variable y almacenarlo en la lista de variables
@@ -88,11 +87,15 @@ public class Instrucciones {
                     for (int i = 2; i < lista.size() - 1; i++) {
 
                         // Imprimir el elemento en la posición i
-                        System.out.println( lista.get(i).value + " ");
+                        System.out.print( lista.get(i).value + " ");
                     }
+                    System.out.println();
                 } else {
                     System.out.println("Sintaxis Quote invalida");
                 }
            
         }
     }   
+
+
+    
