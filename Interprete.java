@@ -83,6 +83,7 @@ public class Interprete {
                     break;
 
                 case COND:
+                    caseEvaluated = true;
                     Conditionals.sintaxisCond(tokens);
                 break;
 
