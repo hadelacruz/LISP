@@ -11,10 +11,8 @@ public class Conditionals {
                 if (!elemento.value.equals(")")) {
                     monton.push(elemento);
                 } else {
+                    // Dos paréntesis de cierre seguidos indican el final de una expresión condicional
                     if (monton.size() >= 2 && monton.elementAt(monton.size() - 2).value.equals(")")) {
-                        // Dos paréntesis de cierre seguidos indican el final de una expresión
-                        // condicional
-                        System.out.println("Fin de la expresión condicional");
                         break;
                     }
 
@@ -22,13 +20,14 @@ public class Conditionals {
                     Token a = monton.pop();
                     Token comparador = monton.pop();
 
-                    // Verificar que a y b no sean paréntesis ni la palabra "cond"
+                    // Verificar que a y b no sean igual a paréntesis ni la palabra "cond"
                     if (a.type != Token.TokenType.PARENTESIS_APERTURA &&
                             a.type != Token.TokenType.PARENTESIS_CIERRE &&
                             !a.value.equalsIgnoreCase("cond") &&
                             b.type != Token.TokenType.PARENTESIS_APERTURA &&
                             b.type != Token.TokenType.PARENTESIS_CIERRE &&
                             !b.value.equalsIgnoreCase("cond")) {
+
                         /* 
                         System.out.println("a:" + a);
                         System.out.println("b:" + b);
@@ -51,6 +50,7 @@ public class Conditionals {
 
                         // Imprimir el resultado
                         System.out.println("Resultado de la comparación: " + resultado);
+                        
                     } else {
                         System.out.println("Variable inválida: " + a.value);
                         System.out.println("Variable inválida: " + b.value);
