@@ -24,7 +24,7 @@ public class Predicados {
             }
 
         }
-        for( Token i : validacion){
+        for( Token tipo : validacion){
             cont2++;
         }
         if(cont2==3){
@@ -77,8 +77,6 @@ public class Predicados {
         System.out.println("¡SINTAXIS EQUAL INVALIDA ! ");
     }
 }
-
-
 
             
     
