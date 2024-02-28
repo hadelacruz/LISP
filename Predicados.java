@@ -11,13 +11,8 @@ public class Predicados {
         // Obtenemos la lista de variables
         List<Variable> variables = Instrucciones.listasDeVariables;
 
-        // Verificamos si hay variables definidas
-        if (variables.isEmpty()) {
-            System.out.println("¡No hay variables definidas para comparar!");
-            return;
-        }
-
-        // Bandera para rastrear si alguna variable no está definida
+       
+        // Variable  para rastrear si alguna variable no está definida
         boolean variableUndefined = false;
 
         // Iteramos sobre los tokens
@@ -31,6 +26,12 @@ public class Predicados {
 
                 // Verificamos si las variables son IDENTIFIER
                 if (Variable1.type == Token.TokenType.IDENTIFIER && Variable2.type == Token.TokenType.IDENTIFIER) {
+                     // Verificamos si hay variables definidas
+                    if (variables.isEmpty()) {
+                        System.out.println("¡No hay variables definidas para comparar!");
+                        return;
+                    }
+
                     // Obtenemos los valores de las variables
                     Object value1 = getValueFromVariable(Variable1.value, variables);
                     Object value2 = getValueFromVariable(Variable2.value, variables);
@@ -49,7 +50,11 @@ public class Predicados {
                         }
                     }
                 } else {
-                    System.out.println("¡Sintaxis de EQUAL inválida!");
+                    if (Variable1.value.equals(Variable2.value)) {
+                        System.out.println("T (los elementos son iguales)");
+                    } else {
+                        System.out.println("NIL (los elementos no son iguales)");
+                    }
                 }
             }
         }
