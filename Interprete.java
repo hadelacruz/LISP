@@ -68,6 +68,7 @@ public class Interprete {
                     Instrucciones.quote(tokens);
                     break;
                 case COND:
+                    caseEvaluated = true;
                     Conditionals.sintaxisCond(tokens);
                 break;
             }
