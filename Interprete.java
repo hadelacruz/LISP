@@ -97,6 +97,8 @@ public class Interprete {
                 case MENORQUE:
                     Predicados.sintaxisMenorQue(tokens);
                 break;
+                case DEFUN:
+                    defun.sintaxisDefun(tokens);
             }
 
             // Si entro a un caso del switch salir del bucle FOR.
