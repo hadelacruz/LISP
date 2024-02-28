@@ -75,6 +75,18 @@ public class Interprete {
                 case COND:
                     Conditionals.sintaxisCond(tokens);
                 break;
+
+                case LIST:
+                    Predicados.sintaxisList(tokens);
+                break;
+
+                case MAYORQUE:
+                    Predicados.sintaxisMayorQue(tokens);
+                break;
+
+                case MENORQUE:
+                    Predicados.sintaxisMenorQue(tokens);
+                break;
             }
 
             // Si entro a un caso del switch salir del bucle FOR.
