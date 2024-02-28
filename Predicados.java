@@ -7,32 +7,42 @@ public class Predicados {
     public static void sintaxisequal(List<Token> tokens) {
         // Creamos una pila
         Stack<Token> pila = new Stack<>();
-
-        // Obtenemos la lista de variables
+        ArrayList<Token>  validacion = new ArrayList<>();
+        //Obtenemos las variables existentes
         List<Variable> variables = Instrucciones.listasDeVariables;
-
-       
-        // Variable  para rastrear si alguna variable no está definida
+        //Verificador
         boolean variableUndefined = false;
+        int cont =0;
+        int cont2= 0;
+        for(Token a : tokens){
+            if(a.value.equals(")") || a.value.equals("(")){
+                cont ++;
+ 
 
-        // Iteramos sobre los tokens
-        for (Token elemento : tokens) {
-            if (!elemento.value.equals(")")) {
-                pila.push(elemento);
-            } else {
-                // Obtenemos y almacenamos los valores de las variables que se quieren comparar
-                Token Variable1 = pila.pop();
-                Token Variable2 = pila.pop();
+            }else{
+                validacion.add(a);
+            }
 
-                // Verificamos si las variables son IDENTIFIER
-                if (Variable1.type == Token.TokenType.IDENTIFIER && Variable2.type == Token.TokenType.IDENTIFIER) {
-                     // Verificamos si hay variables definidas
-                    if (variables.isEmpty()) {
-                        System.out.println("¡No hay variables definidas para comparar!");
-                        return;
-                    }
-
-                    // Obtenemos los valores de las variables
+        }
+        for( Token i : validacion){
+            cont2++;
+        }
+        if(cont2==3){
+            //Iteramos sobre los tokens
+            for(Token elemento:tokens){
+                if (!elemento.value.equals(")")) {
+                    pila.push(elemento);
+                } else {
+                    // Obtenemos y almacenamos los valores de las variables que se quieren comparar
+                    Token Variable1 = pila.pop();
+                    Token Variable2 = pila.pop();
+                    if (Variable1.type == Token.TokenType.IDENTIFIER && Variable2.type == Token.TokenType.IDENTIFIER) {
+                        // Verificamos si hay variables definidas
+                       if (variables.isEmpty()) {
+                           System.out.println("¡No hay variables definidas para comparar!");
+                           return;
+                       }
+                        // Obtenemos los valores de las variables
                     Object value1 = getValueFromVariable(Variable1.value, variables);
                     Object value2 = getValueFromVariable(Variable2.value, variables);
 
@@ -63,7 +73,18 @@ public class Predicados {
         if (variableUndefined) {
             System.out.println("Defina la/s variable/s y pruebe de nuevo");
         }
+    }else{
+        System.out.println("¡SINTAXIS EQUAL INVALIDA ! ");
     }
+}
+
+
+
+            
+    
+
+  
+      
 
     // Método para obtener el valor de una variable dada su nombre
     private static Object getValueFromVariable(String variableName, List<Variable> variables) {
