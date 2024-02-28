@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class Calculadora {
+    static ArrayList<Variable> listaVariables = Instrucciones.listasDeVariables;
 
     /*
      *
@@ -51,6 +53,5 @@ public class Calculadora {
         }
         return "";
 
-        // System.out.println("El resultado es: " + stack.pop());
     }
 }

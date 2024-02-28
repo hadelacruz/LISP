@@ -45,6 +45,8 @@ public class Interprete {
             return false;
     }
 
+    static ArrayList<Variable> listasDeVariables = Instrucciones.listasDeVariables;
+
     public static void interpreteListTokens(List<Token> tokens) {
         for (Token token : tokens) {
             boolean caseEvaluated = false;
@@ -53,7 +55,15 @@ public class Interprete {
                 case OPERADOR: // Case cuando por identifica que viene un operador aritmético.
                     StringBuilder cadenaResultante = new StringBuilder();
                     for (Token elemento : tokens) {
-                        cadenaResultante.append(elemento.value);
+                        if (elemento.getType() == Token.guessTokenType("IDENTIFIER")){
+                            for (Variable variable : listasDeVariables) {
+                                if (variable.getName().equals(elemento.value)){
+                                    cadenaResultante.append(variable.getValue());
+                                }
+                            }
+                        }else{
+                            cadenaResultante.append(elemento.value);
+                        }
                     }
                     caseEvaluated = true;
                     // Se imprime el resultado de la operación aritmética.
