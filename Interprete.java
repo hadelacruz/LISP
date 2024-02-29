@@ -74,10 +74,11 @@ public class Interprete {
                     // Sintaxis de la declaración de una variale "SETQ"
                     Instrucciones.sintaxisSetq(tokens);
                     break;
-                case QUOTE:
 
+                case QUOTE:
                     Instrucciones.sintaxisQuote(tokens);
                     break;
+
                 case EQUAL:
                     Predicados.sintaxisequal(tokens);
                     break;
@@ -85,21 +86,28 @@ public class Interprete {
                 case COND:
                     caseEvaluated = true;
                     Conditionals.sintaxisCond(tokens);
-                break;
+                    break;
 
                 case LIST:
                     Predicados.sintaxisList(tokens);
-                break;
+                    break;
 
                 case MAYORQUE:
                     Predicados.sintaxisMayorQue(tokens);
-                break;
+                    break;
 
                 case MENORQUE:
                     Predicados.sintaxisMenorQue(tokens);
-                break;
+                    break;
+
                 case DEFUN:
                     defun.sintaxisDefun(tokens);
+                    break;
+
+                case ATOM:
+                    Predicados.sintaxisatom(tokens);
+                    break;
+
             }
 
             // Si entro a un caso del switch salir del bucle FOR.

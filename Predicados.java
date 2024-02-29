@@ -1,35 +1,36 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Predicados {
 
     public static void sintaxisequal(List<Token> tokens) {
         // Creamos una pila
         Stack<Token> pila = new Stack<>();
-        ArrayList<Token>  validacion = new ArrayList<>();
-        //Obtenemos las variables existentes
+        ArrayList<Token> validacion = new ArrayList<>();
+        // Obtenemos las variables existentes
         List<Variable> variables = Instrucciones.listasDeVariables;
-        //Verificador
+        // Verificador
         boolean variableUndefined = false;
-        int cont =0;
-        int cont2= 0;
-        for(Token a : tokens){
-            if(a.value.equals(")") || a.value.equals("(")){
-                cont ++;
- 
+        int cont = 0;
+        int cont2 = 0;
+        for (Token a : tokens) {
+            if (a.value.equals(")") || a.value.equals("(")) {
+                cont++;
 
-            }else{
+            } else {
                 validacion.add(a);
             }
 
         }
-        for( Token tipo : validacion){
+        for (Token tipo : validacion) {
             cont2++;
         }
-        if(cont2==3){
-            //Iteramos sobre los tokens
-            for(Token elemento:tokens){
+        if (cont2 == 3) {
+            // Iteramos sobre los tokens
+            for (Token elemento : tokens) {
                 if (!elemento.value.equals(")")) {
                     pila.push(elemento);
                 } else {
@@ -38,51 +39,46 @@ public class Predicados {
                     Token Variable2 = pila.pop();
                     if (Variable1.type == Token.TokenType.IDENTIFIER && Variable2.type == Token.TokenType.IDENTIFIER) {
                         // Verificamos si hay variables definidas
-                       if (variables.isEmpty()) {
-                           System.out.println("¡No hay variables definidas para comparar!");
-                           return;
-                       }
+                        if (variables.isEmpty()) {
+                            System.out.println("¡No hay variables definidas para comparar!");
+                            return;
+                        }
                         // Obtenemos los valores de las variables
-                    Object value1 = getValueFromVariable(Variable1.value, variables);
-                    Object value2 = getValueFromVariable(Variable2.value, variables);
+                        Object value1 = getValueFromVariable(Variable1.value, variables);
+                        Object value2 = getValueFromVariable(Variable2.value, variables);
 
-                    // Si alguna de las variables no está definida, establecemos la bandera en true
-                    if (value1 == null || value2 == null) {
-                        variableUndefined = true;
-                    }
+                        // Si alguna de las variables no está definida, establecemos la bandera en true
+                        if (value1 == null || value2 == null) {
+                            variableUndefined = true;
+                        }
 
-                    // Comparamos los valores de las variables solo si ambas están definidas
-                    if (value1 != null && value2 != null) {
-                        if (value1.equals(value2)) {
+                        // Comparamos los valores de las variables solo si ambas están definidas
+                        if (value1 != null && value2 != null) {
+                            if (value1.equals(value2)) {
+                                System.out.println("T (los elementos son iguales)");
+                            } else {
+                                System.out.println("NIL (los elementos no son iguales)");
+                            }
+                        }
+                    } else {
+                        if (Variable1.value.equals(Variable2.value)) {
                             System.out.println("T (los elementos son iguales)");
                         } else {
                             System.out.println("NIL (los elementos no son iguales)");
                         }
                     }
-                } else {
-                    if (Variable1.value.equals(Variable2.value)) {
-                        System.out.println("T (los elementos son iguales)");
-                    } else {
-                        System.out.println("NIL (los elementos no son iguales)");
-                    }
                 }
             }
-        }
 
-        // Si al menos una variable no está definida, imprimimos el mensaje de error correspondiente
-        if (variableUndefined) {
-            System.out.println("Defina la/s variable/s y pruebe de nuevo");
+            // Si al menos una variable no está definida, imprimimos el mensaje de error
+            // correspondiente
+            if (variableUndefined) {
+                System.out.println("Defina la/s variable/s y pruebe de nuevo");
+            }
+        } else {
+            System.out.println("¡SINTAXIS EQUAL INVALIDA ! ");
         }
-    }else{
-        System.out.println("¡SINTAXIS EQUAL INVALIDA ! ");
     }
-}
-
-            
-    
-
-  
-      
 
     // Método para obtener el valor de una variable dada su nombre
     private static Object getValueFromVariable(String variableName, List<Variable> variables) {
@@ -114,58 +110,119 @@ public class Predicados {
         System.out.println(variables);
     }
 
-
     public static <T> void sintaxisMenorQue(List<Token> tokens) {
-        //Creamos una pila
-        Stack<Token> pila= new Stack<>();
-            for (Token elemento : tokens) {
-                //metemos los elementos del input a la pila exceptuando los parentesis de cierre
-                if (!elemento.value.equals(")")) {
-                    pila.push(elemento);
-                } else {
-                    //Obtenemos y almacenamos los valores de las variables que se quieren comparar
-                    Token Variable1;
-                    Token Variable2 = pila.pop();
-                    Variable1 = pila.pop();
+        // Creamos una pila
+        Stack<Token> pila = new Stack<>();
+        for (Token elemento : tokens) {
+            // metemos los elementos del input a la pila exceptuando los parentesis de
+            // cierre
+            if (!elemento.value.equals(")")) {
+                pila.push(elemento);
+            } else {
+                // Obtenemos y almacenamos los valores de las variables que se quieren comparar
+                Token Variable1;
+                Token Variable2 = pila.pop();
+                Variable1 = pila.pop();
 
-                    int numero1 = Integer.parseInt(Variable1.value);
-                    int numero2 = Integer.parseInt(Variable2.value);
-                    //Si detectamos el equal procedemos
-                    if (pila.pop().value.equals("<")) {
-                        if(numero1 < numero2) {
-                            System.out.println("T");
-                        }else{
-                            System.out.println("NIL");
-                        }
-                    } else System.out.println("¡Sintaxis de Menor Inválida!");
-                }
+                int numero1 = Integer.parseInt(Variable1.value);
+                int numero2 = Integer.parseInt(Variable2.value);
+                // Si detectamos el equal procedemos
+                if (pila.pop().value.equals("<")) {
+                    if (numero1 < numero2) {
+                        System.out.println("T");
+                    } else {
+                        System.out.println("NIL");
+                    }
+                } else
+                    System.out.println("¡Sintaxis de Menor Inválida!");
             }
+        }
     }
 
     public static <T> void sintaxisMayorQue(List<Token> tokens) {
-        //Creamos una pila
-        Stack<Token> pila= new Stack<>();
-            for (Token elemento : tokens) {
-                //metemos los elementos del input a la pila exceptuando los parentesis de cierre
-                if (!elemento.value.equals(")")) {
-                    pila.push(elemento);
-                } else {
-                    //Obtenemos y almacenamos los valores de las variables que se quieren comparar
-                    Token Variable1;
-                    Token Variable2 = pila.pop();
-                    Variable1 = pila.pop();
+        // Creamos una pila
+        Stack<Token> pila = new Stack<>();
+        for (Token elemento : tokens) {
+            // metemos los elementos del input a la pila exceptuando los parentesis de
+            // cierre
+            if (!elemento.value.equals(")")) {
+                pila.push(elemento);
+            } else {
+                // Obtenemos y almacenamos los valores de las variables que se quieren comparar
+                Token Variable1;
+                Token Variable2 = pila.pop();
+                Variable1 = pila.pop();
 
-                    int numero1 = Integer.parseInt(Variable1.value);
-                    int numero2 = Integer.parseInt(Variable2.value);
-                    //Si detectamos el equal procedemos
-                    if (pila.pop().value.equals(">")) {
-                        if(numero1 > numero2) {
+                int numero1 = Integer.parseInt(Variable1.value);
+                int numero2 = Integer.parseInt(Variable2.value);
+                // Si detectamos el equal procedemos
+                if (pila.pop().value.equals(">")) {
+                    if (numero1 > numero2) {
+                        System.out.println("T");
+                    } else {
+                        System.out.println("NIL");
+                    }
+                } else
+                    System.out.println("¡Sintaxis de Menor Inválida!");
+            }
+        }
+    }
+
+    public static <T> void sintaxisatom(List<Token> tokens) {
+        // Creamos una pila para almacenar los tokens
+        Stack<Token> stack = new Stack<>();
+
+        try {
+            
+            List<String> cadenaElementoTokens = new ArrayList<>();
+            String cadenaResultante = "";
+            for (Token elemento : tokens) {
+                cadenaElementoTokens.add(elemento.value);
+            }
+            cadenaResultante = String.join(" ", cadenaElementoTokens);
+        
+            // Iteramos sobre cada token en la lista de tokens
+            for (Token elemento : tokens) {
+                if (tokens.size() > 4) { // Condicional cuando no es un atomo (atom (1 2 3)) 
+                    
+                    // Definir la expresión regular
+                    String patron = "\\( atom \\( (\\w+ ?)+ \\) \\)";
+
+                    // Usar Pattern y Matcher para verificar si el string coincide con el patrón
+                    Pattern pattern = Pattern.compile(patron);
+                    Matcher matcher = pattern.matcher(cadenaResultante);
+
+                    if (matcher.matches()){
+                        System.out.println("Nil");
+                        break;
+                    }else{
+                        System.out.println("Sintaxis inválida");
+                        break;
+                    }
+                    
+                    
+                } else { // Condicional cuando si es un átomo (atom 1)
+                    if (!elemento.value.equals(")")) { 
+                        stack.push(elemento);
+
+                    } else {
+                        // Obtenemos el token anterior al paréntesis de cierre
+                        T variable = (T) stack.pop().value;
+                        
+                        boolean state = variable instanceof List<?>; 
+
+                        if (!state){
                             System.out.println("T");
-                        }else{
-                            System.out.println("NIL");
                         }
-                    } else System.out.println("¡Sintaxis de Menor Inválida!");
+                    }
                 }
             }
+            
+
+        } catch (Exception e) {
+            // Si ocurre una excepción, emitimos un mensaje de error de sintaxis
+            System.out.println("¡Sintaxis inválida!");
+        }
     }
+
 }
