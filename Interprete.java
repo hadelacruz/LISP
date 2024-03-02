@@ -55,13 +55,13 @@ public class Interprete {
                 case OPERADOR: // Case cuando por identifica que viene un operador aritmético.
                     StringBuilder cadenaResultante = new StringBuilder();
                     for (Token elemento : tokens) {
-                        if (elemento.getType() == Token.guessTokenType("IDENTIFIER")){
+                        if (elemento.getType() == Token.guessTokenType("IDENTIFIER")) {
                             for (Variable variable : listasDeVariables) {
-                                if (variable.getName().equals(elemento.value)){
+                                if (variable.getName().equals(elemento.value)) {
                                     cadenaResultante.append(variable.getValue());
                                 }
                             }
-                        }else{
+                        } else {
                             cadenaResultante.append(elemento.value);
                         }
                     }
@@ -84,7 +84,7 @@ public class Interprete {
 
                 case COND:
                     caseEvaluated = true;
-                    Conditionals.sintaxisCond(tokens, listasDeVariables);
+                    Conditionals.sintaxisCond(tokens);
                     break;
 
                 case LIST:

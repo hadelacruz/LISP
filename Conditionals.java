@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -11,15 +12,33 @@ import java.util.Stack;
  */
 
 public class Conditionals {
+    static ArrayList<Variable> listasDeVariables = Instrucciones.listasDeVariables;
 
-    public static Token sintaxisCond(List<Token> tokens, List<Variable> variables) {
+    public static Token sintaxisCond(List<Token> tokens) {
         Stack<Token> monton = new Stack<>();
         int countParentesisCierre = 0;
+        StringBuilder conversion = new StringBuilder();
 
         try {
             for (Token elemento : tokens) {
-
-                if (!elemento.value.equals(")")) {
+                if (elemento.getType() == Token.guessTokenType("IDENTIFIER")) {
+                    for (Variable variable : listasDeVariables) {
+                        if (variable.getName().equals(elemento.value)) {
+                            // Obtener el valor de la variable y realizar el casting a int
+                            Object valorVariableObjeto = variable.getValue();
+                            int valorVariableInt = 0; // Valor por defecto en caso de fallo en el casting
+                            try {
+                                valorVariableInt = Integer.parseInt(String.valueOf(valorVariableObjeto));
+                            } catch (NumberFormatException e) {
+                                // Manejar una excepción en caso de que el valor no sea un número válido
+                                e.printStackTrace();
+                            }
+                            // Crear un nuevo token con el valor convertido a int
+                            Token tokenValorVariable = new Token(Token.TokenType.NUMBER, String.valueOf(valorVariableInt));
+                            monton.push(tokenValorVariable);
+                        }
+                    }        
+                } else if (!elemento.value.equals(")")) {
                     monton.push(elemento);
 
                 } else {
@@ -74,63 +93,13 @@ public class Conditionals {
                                 } else {
                                     System.out.println("Comparador no válido: " + comparador.value);
                                 }
-                            } else { // Si a o b no son números, intentar buscarlos en la lista de variables
-                                Variable variableA = null;
-                                Variable variableB = null;
-
-                                for (Variable var : variables) {
-                                    if (a.value.equals(var.getName())) {
-                                        variableA = var;
-                                    }
-                                    if (b.value.equals(var.getName())) {
-                                        variableB = var;
-                                    }
-                                }
-
-                                // Si se encontraron las variables en la lista, comparar sus valores
-                                if (variableA.getValue() instanceof Integer && variableB.getValue() instanceof Integer) {
-                                    int valorA = (int) variableA.getValue();
-                                    int valorB = (int) variableB.getValue();
-                                
-                                    if (comparador.value.equals(">")) {
-                                        if (valorA > valorB) {
-                                            System.out.println(palabra);
-                                            return palabra;
-                                        }
-                                    } else if (comparador.value.equals("<")) {
-                                        if (valorA < valorB) {
-                                            System.out.println(palabra);
-                                            return palabra;
-                                        }
-                                    } else if (comparador.value.equals("=")) {
-                                        if (valorA == valorB) {
-                                            System.out.println(palabra);
-                                            return palabra;
-                                        }
-                                    } else if (comparador.value.equals("<=")) {
-                                        if (valorA <= valorB) {
-                                            System.out.println(palabra);
-                                            return palabra;
-                                        }
-                                    } else if (comparador.value.equals(">=")) {
-                                        if (valorA >= valorB) {
-                                            System.out.println(palabra);
-                                            return palabra;
-                                        }
-                                    } else {
-                                        System.out.println("Comparador no válido: " + comparador.value);
-                                    }
-                                } else {
+                            } else {
                                     System.out.println("Los valores de las variables no son numéricos o no están inicializados como enteros");
                                 }
                             }
-                        } else {
-                            System.out.println("Variable inválida: " + a.value);
-                            System.out.println("Variable inválida: " + b.value);
-                        }
+                        } 
                     }
                 }
-            }
         } catch (Exception e) {
             System.out.println("¡Sintaxis inválida!");
         }
