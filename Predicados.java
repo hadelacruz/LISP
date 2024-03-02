@@ -168,7 +168,7 @@ public class Predicados {
         }
     }
 
-    public static <T> void sintaxisatom(List<Token> tokens) {
+    public static <T> void sintaxisAtom(List<Token> tokens) {
         // Creamos una pila para almacenar los tokens
         Stack<Token> stack = new Stack<>();
 

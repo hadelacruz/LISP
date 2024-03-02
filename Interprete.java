@@ -84,7 +84,7 @@ public class Interprete {
 
                 case COND:
                     caseEvaluated = true;
-                    Conditionals.sintaxisCond(tokens);
+                    Conditionals.sintaxisCond(tokens, listasDeVariables);
                     break;
 
                 case LIST:
@@ -104,7 +104,7 @@ public class Interprete {
                     break;
 
                 case ATOM:
-                    Predicados.sintaxisatom(tokens);
+                    Predicados.sintaxisAtom(tokens);
                     break;
             }
 
