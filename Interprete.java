@@ -71,7 +71,6 @@ public class Interprete {
                     break;
 
                 case SETQ:
-                    // Sintaxis de la declaración de una variale "SETQ"
                     Instrucciones.sintaxisSetq(tokens);
                     break;
 
@@ -107,7 +106,6 @@ public class Interprete {
                 case ATOM:
                     Predicados.sintaxisatom(tokens);
                     break;
-
             }
 
             // Si entro a un caso del switch salir del bucle FOR.
