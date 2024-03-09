@@ -55,16 +55,84 @@ public class Predicados {
                         // Comparamos los valores de las variables solo si ambas están definidas
                         if (value1 != null && value2 != null) {
                             if (value1.equals(value2)) {
-                                System.out.println("T (los elementos son iguales)");
+                                System.out.println("T ");
                             } else {
-                                System.out.println("NIL (los elementos no son iguales)");
+                                System.out.println("NIL ");
                             }
                         }
-                    } else {
-                        if (Variable1.value.equals(Variable2.value)) {
-                            System.out.println("T (los elementos son iguales)");
+
+                    //Casos en que haya una variable y un numero por comparar 
+                    } else if (Variable1.type == Token.TokenType.IDENTIFIER && Variable2.type == Token.TokenType.NUMBER){
+                        //Obtenemos el valor de la variable 
+                        Object value1 = getValueFromVariable(Variable1.value, variables);
+                        if (value1 == null) {
+                            variableUndefined = true;
+                        }
+                        if(value1!=null){
+                            //Comparamos los valores 
+                            if(value1.equals(Integer.parseInt(Variable2.value))){
+                                System.out.println("T ");
+                            }else{
+                                System.out.println("NIL ");
+
+                            }
+                        }
+
+//Mismo caso solo que esta vez la variable 2 es la que es un identifier 
+                    }else if(Variable1.type == Token.TokenType.NUMBER && Variable2.type == Token.TokenType.IDENTIFIER){
+                        Object value2 = getValueFromVariable(Variable2.value, variables);
+                        if(value2==null){
+                            variableUndefined=true;
+                        }
+                        if(value2!=null){
+                            if(value2.equals(Integer.parseInt(Variable1.value))){
+                                System.out.println("T ");
+                            }else{
+                                System.out.println("NIL ");
+
+                            }
+                        }
+                        //Misma logica pero para Strings 
+                    } else if (Variable1.type == Token.TokenType.IDENTIFIER && Variable2.type == Token.TokenType.STRING) {
+                        // Si Variable1 es un identificador y Variable2 es una cadena de caracteres
+                        // Obtenemos el valor asociado al identificador Variable1
+                        Object value1 = getValueFromVariable(Variable1.value, variables);
+                    
+                        if (value1 == null) {
+                            variableUndefined = true;
                         } else {
-                            System.out.println("NIL (los elementos no son iguales)");
+                            // Convertimos Variable2 a cadena de caracteres eliminando las comillas si es necesario;
+                    
+                            // Comparamos el valor de Variable1 con stringValue2
+                            if (value1.toString().equals(Variable2.value)) {
+                                System.out.println("T ");
+                            } else {
+                                System.out.println("NIL ");
+                            }
+                        }
+                    } else if (Variable1.type == Token.TokenType.STRING && Variable2.type == Token.TokenType.IDENTIFIER) {
+                        // Si Variable1 es una cadena de caracteres y Variable2 es un identificador
+                        // Obtenemos el valor asociado al identificador Variable2
+                        Object value2 = getValueFromVariable(Variable2.value, variables);
+                    
+                        if (value2 == null) {
+                            variableUndefined = true;
+                        } else {
+                    
+                            // Comparamos el valor de Variable2 con stringValue1
+                            if (value2.toString().equals(Variable1.value)) {
+                                System.out.println("T ");
+                            } else {
+                                System.out.println("NIL ");
+                            }
+                        }
+
+                    }
+                    else {
+                        if (Variable1.value.equals(Variable2.value)) {
+                            System.out.println("T ");
+                        } else {
+                            System.out.println("NIL ");
                         }
                     }
                 }

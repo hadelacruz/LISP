@@ -53,32 +53,35 @@ public class Interprete {
             // Validar que tipo de token es y en base a eso validar que hacer.
             switch (token.type) {
                 case OPERADOR: // Case cuando por identifica que viene un operador aritmético.
-                    StringBuilder cadenaResultante = new StringBuilder();
+                    ArrayList<String> valoresLista = new ArrayList<>();
                     for (Token elemento : tokens) {
-                        if (elemento.getType() == Token.guessTokenType("IDENTIFIER")) {
+                        if (elemento.type.equals(Token.TokenType.IDENTIFIER)) {
                             for (Variable variable : listasDeVariables) {
                                 if (variable.getName().equals(elemento.value)) {
-                                    cadenaResultante.append(variable.getValue());
+                                    valoresLista.add(String.valueOf(variable.getValue()));
                                 }
                             }
                         } else {
-                            cadenaResultante.append(elemento.value);
+                            valoresLista.add(String.valueOf(elemento.value));
                         }
                     }
                     caseEvaluated = true;
                     // Se imprime el resultado de la operación aritmética.
-                    System.out.println(Calculadora.calculadoraOperaciones(String.valueOf(cadenaResultante)));
+                    System.out.println(Calculadora.calculadoraOperaciones(valoresLista));
                     break;
 
                 case SETQ:
+                    caseEvaluated = true;
                     Instrucciones.sintaxisSetq(tokens);
                     break;
 
                 case QUOTE:
+                    caseEvaluated = true;
                     Instrucciones.sintaxisQuote(tokens);
                     break;
 
                 case EQUAL:
+                    caseEvaluated = true;
                     Predicados.sintaxisequal(tokens);
                     break;
 
@@ -88,22 +91,33 @@ public class Interprete {
                     break;
 
                 case LIST:
+                    caseEvaluated = true;
                     Predicados.sintaxisList(tokens);
                     break;
 
                 case MAYORQUE:
+                    caseEvaluated = true;
                     Predicados.sintaxisMayorQue(tokens);
                     break;
 
                 case MENORQUE:
+                    caseEvaluated = true;
                     Predicados.sintaxisMenorQue(tokens);
                     break;
 
                 case DEFUN:
-                    defun.sintaxisDefun(tokens);
+                    defun.saveDefun(tokens);
+                    caseEvaluated = true;
+                    break;
+
+                case IDENTIFIER:
+                    String resFunc = defun.executeFunction(tokens);
+                    System.out.println("El resultado final de la funcion es: " + resFunc);
+                    caseEvaluated = true;
                     break;
 
                 case ATOM:
+                    caseEvaluated = true;
                     Predicados.sintaxisAtom(tokens);
                     break;
             }

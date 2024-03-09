@@ -2,7 +2,7 @@
 public class Token {
     
     // Enumeración para tipos de tokens
-    enum TokenType {
+    public enum TokenType {
         IDENTIFIER, NUMBER, PARENTESIS_APERTURA, PARENTESIS_CIERRE, UNKNOWN, 
         ATOM, DEFUN, COND, LIST, EQUAL, SETQ, MAYORQUE, MENORQUE, SUMA,QUOTE,
         RESTA, MULTIPLICACION, DIVISION, OPERADOR, BOOLEAN, STRING, EQUAL_SIGN, 
