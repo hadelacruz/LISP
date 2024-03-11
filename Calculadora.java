@@ -1,11 +1,21 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * La clase Calculadora proporciona un método estático para realizar operaciones matemáticas
+ * utilizando notación de prefijo y una pila para evaluar expresiones aritméticas.
+ */
 public class Calculadora {
+    /**
+     * Lista de variables globales utilizadas en las operaciones.
+     */
     static ArrayList<Variable> listaVariables = Instrucciones.listasDeVariables;
 
-    /*
+    /**
+     * Realiza operaciones matemáticas utilizando notación de prefijo.
      *
+     * @param valoresLista Lista de valores y operadores en notación de prefijo.
+     * @return Resultado de la evaluación de la expresión matemática.
      */
     public static String calculadoraOperaciones(ArrayList<String> valoresLista) {
         Stack<String> stack = new Stack<>();
@@ -42,7 +52,7 @@ public class Calculadora {
                     }
 
                 }
-                
+
             }
             return stack.pop();
 

@@ -2,8 +2,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * La clase {@code PruebasUnitarias} contiene pruebas unitarias para las
+ * funciones definidas en Lisp.
+ */
 public class PruebasUnitarias {
 
+    /**
+     * Configuración inicial de las pruebas unitarias.
+     * Se definen las funciones Lisp utilizadas en las pruebas.
+     */
     @BeforeAll
     public static void setup() {
         // Definimos las funciones aquí
@@ -14,7 +22,7 @@ public class PruebasUnitarias {
         String multiplicacion_def = "(defun multiplicacion (x y) (* x y))";
         String division_def = "(defun division (x y) (/ x y))";
         String fibonacci_def = "(defun fibonacci (n) (cond ((< n 0) 0) ((= n 1) 1) ((>= n 2) (+ (fibonacci (- n 1)) (fibonacci (- n 2))))))";
-        
+
         // Ejecutamos las definiciones de funciones en un entorno simulado
         Interprete.interpreteListTokens(LispTokenizer.tokenize(aumento2_def));
         Interprete.interpreteListTokens(LispTokenizer.tokenize(factorial_def));
@@ -25,6 +33,9 @@ public class PruebasUnitarias {
         Interprete.interpreteListTokens(LispTokenizer.tokenize(fibonacci_def));
     }
 
+    /**
+     * Prueba unitaria para la función aumento2.
+     */
     @Test
     public void pruebaAumento2() {
         String input = "(aumento2 5)";
@@ -33,6 +44,9 @@ public class PruebasUnitarias {
         assertEquals(expectedOutput, actualOutput);
     }
 
+    /**
+     * Prueba unitaria para la función factorial.
+     */
     @Test
     public void pruebaFactorial() {
         String input = "(factorial 9)";
@@ -41,6 +55,9 @@ public class PruebasUnitarias {
         assertEquals(expectedOutput, actualOutput);
     }
 
+    /**
+     * Prueba unitaria para la función suma.
+     */
     @Test
     public void pruebaSuma() {
         String input = "(suma 3 4)";
@@ -49,32 +66,44 @@ public class PruebasUnitarias {
         assertEquals(expectedOutput, actualOutput);
     }
 
+    /**
+     * Prueba Unitaria para la funcion resta
+     */
     @Test
-    public void pruebaResta(){
+    public void pruebaResta() {
         String input = "(resta 5 4)";
         String expectedOutput = "1";
         String actualOutput = defun.executeFunction(LispTokenizer.tokenize(input));
         assertEquals(expectedOutput, actualOutput);
     }
 
+    /**
+     * Prueba unitaria para la función multiplicacion.
+     */
     @Test
-    public void pruebaMultipicacion(){
+    public void pruebaMultipicacion() {
         String input = "(multiplicacion 10 9)";
         String expectedOutput = "90";
         String actualOutput = defun.executeFunction(LispTokenizer.tokenize(input));
         assertEquals(expectedOutput, actualOutput);
     }
 
+    /**
+     * Prueba unitaria para la función división.
+     */
     @Test
-    public void pruebaDivision(){
+    public void pruebaDivision() {
         String input = "(division 100 20)";
         String expectedOutput = "5";
         String actualOutput = defun.executeFunction(LispTokenizer.tokenize(input));
         assertEquals(expectedOutput, actualOutput);
     }
 
+    /**
+     * Prueba unitaria para la función fibonacci.
+     */
     @Test
-    public void pruebaFibonacci(){
+    public void pruebaFibonacci() {
         String input = "(fibonacci 4)";
         String expectedOutput = "3";
         String actualOutput = defun.executeFunction(LispTokenizer.tokenize(input));

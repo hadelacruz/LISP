@@ -1,11 +1,16 @@
-// Clase interna para representar tokens
+/**
+ * La clase {@code Token} representa tokens utilizados en el análisis léxico de
+ * expresiones Lisp.
+ * Contiene una enumeración para los tipos de tokens y métodos para evaluar y
+ * obtener el tipo de un token.
+ */
 public class Token {
-    
+
     // Enumeración para tipos de tokens
     public enum TokenType {
-        IDENTIFIER, NUMBER, PARENTESIS_APERTURA, PARENTESIS_CIERRE, UNKNOWN, 
-        ATOM, DEFUN, COND, LIST, EQUAL, SETQ, MAYORQUE, MENORQUE, SUMA,QUOTE,
-        RESTA, MULTIPLICACION, DIVISION, OPERADOR, BOOLEAN, STRING, EQUAL_SIGN, 
+        IDENTIFIER, NUMBER, PARENTESIS_APERTURA, PARENTESIS_CIERRE, UNKNOWN,
+        ATOM, DEFUN, COND, LIST, EQUAL, SETQ, MAYORQUE, MENORQUE, SUMA, QUOTE,
+        RESTA, MULTIPLICACION, DIVISION, OPERADOR, BOOLEAN, STRING, EQUAL_SIGN,
         MENOROIGUALQUE, MAYOROIGUALQUE
     }
 
@@ -13,17 +18,28 @@ public class Token {
     Token.TokenType type;
     String value;
 
+    /**
+     * Constructor de la clase Token.
+     * 
+     * @param type  Tipo del token.
+     * @param value Valor del token.
+     */
     Token(TokenType type, String value) {
         this.type = type;
         this.value = value;
     }
 
-    // Método para evaluar el tipo de token
+    /**
+     * Método para evaluar el tipo de token basado en su valor.
+     * 
+     * @param token Valor del token a evaluar.
+     * @return Tipo de token correspondiente.
+     */
     public static TokenType guessTokenType(String token) {
 
         if (token.matches("-?\\d+(\\.\\d+)?")) {
             return TokenType.NUMBER;
-        }else if(token.matches("(?i)quote")){
+        } else if (token.matches("(?i)quote")) {
             return TokenType.QUOTE;
 
         } else if (token.matches("(?i)atom")) {
@@ -71,22 +87,32 @@ public class Token {
         } else if (token.matches("^\"[^\"]*\"$")) {
             return TokenType.STRING;
 
-        } else if (token.matches("^<=?$")){
+        } else if (token.matches("^<=?$")) {
             return TokenType.MENOROIGUALQUE;
 
-        } else if (token.matches("^>=?$")){
+        } else if (token.matches("^>=?$")) {
             return TokenType.MAYOROIGUALQUE;
-        
+
         } else {
             return TokenType.UNKNOWN;
         }
     }
 
+    /**
+     * Representación en cadena del token en formato (tipo, valor).
+     * 
+     * @return Cadena que representa el token.
+     */
     @Override
     public String toString() {
         return String.format("(%s, %s)", type, value);
     }
 
+    /**
+     * Método para obtener el tipo de token.
+     * 
+     * @return Tipo de token.
+     */
     public TokenType getType() {
         return type;
     }

@@ -11,9 +11,24 @@ import java.util.Stack;
  *      suponiendo que a sea mayor que b.
  */
 
-public class Conditionals {
-    static ArrayList<Variable> listasDeVariables = Instrucciones.listasDeVariables;
 
+/**
+ * La clase Conditionals proporciona un método para evaluar expresiones condicionales en lenguaje Lisp.
+ * Se utiliza en conjunto con la instrucción (cond) para realizar comparaciones y retornar un resultado
+ * basado en las condiciones especificadas.
+ */
+public class Conditionals {
+    /**
+     * Lista de variables globales utilizadas en las operaciones.
+     */
+    static ArrayList<Variable> listasDeVariables = Instrucciones.listasDeVariables;
+    
+    /**
+     * Evalúa expresiones condicionales en notación Lisp y devuelve el resultado correspondiente.
+     *
+     * @param tokens Lista de tokens que representa la expresión condicional en notación Lisp.
+     * @return Token resultante de la evaluación condicional.
+     */
     public static Token sintaxisCond(List<Token> tokens) {
         Stack<Token> monton = new Stack<>();
         int countParentesisCierre = 0;

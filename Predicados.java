@@ -4,8 +4,19 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * La clase {@code Predicados} contiene métodos que implementan funciones
+ * lógicas y de comparación
+ * utilizadas en el lenguaje de programación Lisp.
+ */
 public class Predicados {
-
+    /**
+     * Compara variables y valores para determinar si son iguales.
+     *
+     * @param tokens Lista de tokens que representan la expresión a evaluar.
+     *               Debe tener la forma (equal variable1 variable2).
+     *               Puede contener variables, números y cadenas de caracteres.
+     */
     public static void sintaxisequal(List<Token> tokens) {
         // Creamos una pila
         Stack<Token> pila = new Stack<>();
@@ -61,48 +72,52 @@ public class Predicados {
                             }
                         }
 
-                    //Casos en que haya una variable y un numero por comparar 
-                    } else if (Variable1.type == Token.TokenType.IDENTIFIER && Variable2.type == Token.TokenType.NUMBER){
-                        //Obtenemos el valor de la variable 
+                        // Casos en que haya una variable y un numero por comparar
+                    } else if (Variable1.type == Token.TokenType.IDENTIFIER
+                            && Variable2.type == Token.TokenType.NUMBER) {
+                        // Obtenemos el valor de la variable
                         Object value1 = getValueFromVariable(Variable1.value, variables);
                         if (value1 == null) {
                             variableUndefined = true;
                         }
-                        if(value1!=null){
-                            //Comparamos los valores 
-                            if(value1.equals(Integer.parseInt(Variable2.value))){
+                        if (value1 != null) {
+                            // Comparamos los valores
+                            if (value1.equals(Integer.parseInt(Variable2.value))) {
                                 System.out.println("T ");
-                            }else{
+                            } else {
                                 System.out.println("NIL ");
 
                             }
                         }
 
-//Mismo caso solo que esta vez la variable 2 es la que es un identifier 
-                    }else if(Variable1.type == Token.TokenType.NUMBER && Variable2.type == Token.TokenType.IDENTIFIER){
+                        // Mismo caso solo que esta vez la variable 2 es la que es un identifier
+                    } else if (Variable1.type == Token.TokenType.NUMBER
+                            && Variable2.type == Token.TokenType.IDENTIFIER) {
                         Object value2 = getValueFromVariable(Variable2.value, variables);
-                        if(value2==null){
-                            variableUndefined=true;
+                        if (value2 == null) {
+                            variableUndefined = true;
                         }
-                        if(value2!=null){
-                            if(value2.equals(Integer.parseInt(Variable1.value))){
+                        if (value2 != null) {
+                            if (value2.equals(Integer.parseInt(Variable1.value))) {
                                 System.out.println("T ");
-                            }else{
+                            } else {
                                 System.out.println("NIL ");
 
                             }
                         }
-                        //Misma logica pero para Strings 
-                    } else if (Variable1.type == Token.TokenType.IDENTIFIER && Variable2.type == Token.TokenType.STRING) {
+                        // Misma logica pero para Strings
+                    } else if (Variable1.type == Token.TokenType.IDENTIFIER
+                            && Variable2.type == Token.TokenType.STRING) {
                         // Si Variable1 es un identificador y Variable2 es una cadena de caracteres
                         // Obtenemos el valor asociado al identificador Variable1
                         Object value1 = getValueFromVariable(Variable1.value, variables);
-                    
+
                         if (value1 == null) {
                             variableUndefined = true;
                         } else {
-                            // Convertimos Variable2 a cadena de caracteres eliminando las comillas si es necesario;
-                    
+                            // Convertimos Variable2 a cadena de caracteres eliminando las comillas si es
+                            // necesario;
+
                             // Comparamos el valor de Variable1 con stringValue2
                             if (value1.toString().equals(Variable2.value)) {
                                 System.out.println("T ");
@@ -110,15 +125,16 @@ public class Predicados {
                                 System.out.println("NIL ");
                             }
                         }
-                    } else if (Variable1.type == Token.TokenType.STRING && Variable2.type == Token.TokenType.IDENTIFIER) {
+                    } else if (Variable1.type == Token.TokenType.STRING
+                            && Variable2.type == Token.TokenType.IDENTIFIER) {
                         // Si Variable1 es una cadena de caracteres y Variable2 es un identificador
                         // Obtenemos el valor asociado al identificador Variable2
                         Object value2 = getValueFromVariable(Variable2.value, variables);
-                    
+
                         if (value2 == null) {
                             variableUndefined = true;
                         } else {
-                    
+
                             // Comparamos el valor de Variable2 con stringValue1
                             if (value2.toString().equals(Variable1.value)) {
                                 System.out.println("T ");
@@ -127,8 +143,7 @@ public class Predicados {
                             }
                         }
 
-                    }
-                    else {
+                    } else {
                         if (Variable1.value.equals(Variable2.value)) {
                             System.out.println("T ");
                         } else {
@@ -159,6 +174,13 @@ public class Predicados {
         return null; // La variable no está definida
     }
 
+    /**
+     * Extrae las variables de una lista y las imprime.
+     *
+     * @param tokens Lista de tokens que representan la expresión a evaluar.
+     *               Debe tener la forma (list var1 var2 ... varN).
+     *               Puede contener variables y otros elementos.
+     */
     public static <T> void sintaxisList(List<Token> tokens) {
         // ArrayList para almacenar las variables
         ArrayList<String> variables = new ArrayList<>();
@@ -178,6 +200,13 @@ public class Predicados {
         System.out.println(variables);
     }
 
+    /**
+     * Compara dos números para determinar si el primero es menor que el segundo.
+     *
+     * @param tokens Lista de tokens que representan la expresión a evaluar.
+     *               Debe tener la forma (< num1 num2).
+     *               Puede contener variables y números.
+     */
     public static <T> void sintaxisMenorQue(List<Token> tokens) {
         // Creamos una pila
         Stack<Token> pila = new Stack<>();
@@ -207,6 +236,13 @@ public class Predicados {
         }
     }
 
+    /**
+     * Compara dos números para determinar si el primero es mayor que el segundo.
+     *
+     * @param tokens Lista de tokens que representan la expresión a evaluar.
+     *               Debe tener la forma (> num1 num2).
+     *               Puede contener variables y números.
+     */
     public static <T> void sintaxisMayorQue(List<Token> tokens) {
         // Creamos una pila
         Stack<Token> pila = new Stack<>();
@@ -236,23 +272,30 @@ public class Predicados {
         }
     }
 
+    /**
+     * Verifica si la expresión es un átomo o una lista.
+     *
+     * @param tokens Lista de tokens que representan la expresión a evaluar.
+     *               Debe tener la forma (atom exp).
+     *               Puede contener variables y otros elementos.
+     */
     public static <T> void sintaxisAtom(List<Token> tokens) {
         // Creamos una pila para almacenar los tokens
         Stack<Token> stack = new Stack<>();
 
         try {
-            
+
             List<String> cadenaElementoTokens = new ArrayList<>();
             String cadenaResultante = "";
             for (Token elemento : tokens) {
                 cadenaElementoTokens.add(elemento.value);
             }
             cadenaResultante = String.join(" ", cadenaElementoTokens);
-        
+
             // Iteramos sobre cada token en la lista de tokens
             for (Token elemento : tokens) {
-                if (tokens.size() > 4) { // Condicional cuando no es un atomo (atom (1 2 3)) 
-                    
+                if (tokens.size() > 4) { // Condicional cuando no es un atomo (atom (1 2 3))
+
                     // Definir la expresión regular
                     String patron = "\\( atom \\( (\\w+ ?)+ \\) \\)";
 
@@ -260,32 +303,30 @@ public class Predicados {
                     Pattern pattern = Pattern.compile(patron);
                     Matcher matcher = pattern.matcher(cadenaResultante);
 
-                    if (matcher.matches()){
+                    if (matcher.matches()) {
                         System.out.println("Nil");
                         break;
-                    }else{
+                    } else {
                         System.out.println("Sintaxis inválida");
                         break;
                     }
-                    
-                    
+
                 } else { // Condicional cuando si es un átomo (atom 1)
-                    if (!elemento.value.equals(")")) { 
+                    if (!elemento.value.equals(")")) {
                         stack.push(elemento);
 
                     } else {
                         // Obtenemos el token anterior al paréntesis de cierre
                         T variable = (T) stack.pop().value;
-                        
-                        boolean state = variable instanceof List<?>; 
 
-                        if (!state){
+                        boolean state = variable instanceof List<?>;
+
+                        if (!state) {
                             System.out.println("T");
                         }
                     }
                 }
             }
-            
 
         } catch (Exception e) {
             // Si ocurre una excepción, emitimos un mensaje de error de sintaxis

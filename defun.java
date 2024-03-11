@@ -2,9 +2,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * La clase `defun` representa una utilidad para definir y ejecutar funciones en
+ * un lenguaje de programación personalizado.
+ * Incluye métodos para guardar la definición de una función y ejecutar una
+ * función previamente definida.
+ * La clase utiliza un enfoque basado en pilas para analizar y procesar las
+ * definiciones de funciones.
+ */
 public class defun {
     public static Environment funciones = new Environment();
 
+    /**
+     * 
+     * @param <T>    Valor generico
+     * @param tokens Lista de tokens que representa la expresión funcion en notación
+     *               Lisp.
+     */
     public static <T> void saveDefun(List<Token> tokens) {
         String nombreFuncion = "";
         int contador = 0;
@@ -74,7 +88,8 @@ public class defun {
                                             if (condicionStack.get(5).type.equals(Token.TokenType.OPERADOR)) {
                                                 resultadoCondicion.expresion1 = new Node();
                                                 resultadoCondicion.expresion1.tipo = "CALL";
-                                                resultadoCondicion.expresion1.nombreFuncion = condicionStack.get(4).value;
+                                                resultadoCondicion.expresion1.nombreFuncion = condicionStack
+                                                        .get(4).value;
                                                 resultadoCondicion.expresion1.operador = condicionStack.get(5).value;
                                                 resultadoCondicion.expresion1.operando1 = condicionStack.get(6).value;
                                                 resultadoCondicion.expresion1.operando2 = condicionStack.get(7).value;
@@ -85,14 +100,19 @@ public class defun {
                                                     if (condicionStack.size() == 9) {
                                                         resultadoCondicion.expresion2 = new Node();
                                                         resultadoCondicion.expresion2.tipo = "VAR/NUM";
-                                                        resultadoCondicion.expresion2.operando1 = condicionStack.get(8).value;
+                                                        resultadoCondicion.expresion2.operando1 = condicionStack
+                                                                .get(8).value;
                                                     } else {
                                                         resultadoCondicion.expresion2 = new Node();
                                                         resultadoCondicion.expresion2.tipo = "CALL";
-                                                        resultadoCondicion.expresion2.nombreFuncion = condicionStack.get(8).value;
-                                                        resultadoCondicion.expresion2.operador = condicionStack.get(9).value;
-                                                        resultadoCondicion.expresion2.operando1 = condicionStack.get(10).value;
-                                                        resultadoCondicion.expresion2.operando2 = condicionStack.get(11).value;
+                                                        resultadoCondicion.expresion2.nombreFuncion = condicionStack
+                                                                .get(8).value;
+                                                        resultadoCondicion.expresion2.operador = condicionStack
+                                                                .get(9).value;
+                                                        resultadoCondicion.expresion2.operando1 = condicionStack
+                                                                .get(10).value;
+                                                        resultadoCondicion.expresion2.operando2 = condicionStack
+                                                                .get(11).value;
                                                     }
                                                 }
 
@@ -107,15 +127,20 @@ public class defun {
                                                     if (condicionStack.size() == 6) {
                                                         resultadoCondicion.expresion2 = new Node();
                                                         resultadoCondicion.expresion2.tipo = "VAR/NUM";
-                                                        resultadoCondicion.expresion2.operando1 = condicionStack.get(5).value;
+                                                        resultadoCondicion.expresion2.operando1 = condicionStack
+                                                                .get(5).value;
 
                                                     } else {
                                                         resultadoCondicion.expresion2 = new Node();
                                                         resultadoCondicion.expresion2.tipo = "CALL";
-                                                        resultadoCondicion.expresion2.nombreFuncion = condicionStack.get(5).value;
-                                                        resultadoCondicion.expresion2.operador = condicionStack.get(6).value;
-                                                        resultadoCondicion.expresion2.operando1 = condicionStack.get(7).value;
-                                                        resultadoCondicion.expresion2.operando2 = condicionStack.get(8).value;
+                                                        resultadoCondicion.expresion2.nombreFuncion = condicionStack
+                                                                .get(5).value;
+                                                        resultadoCondicion.expresion2.operador = condicionStack
+                                                                .get(6).value;
+                                                        resultadoCondicion.expresion2.operando1 = condicionStack
+                                                                .get(7).value;
+                                                        resultadoCondicion.expresion2.operando2 = condicionStack
+                                                                .get(8).value;
                                                     }
                                                 }
 
@@ -198,6 +223,12 @@ public class defun {
 
     }
 
+    /**
+     * 
+     * @param tokens Lista de tokens que representa la expresión funcion en notación
+     *               Lisp.
+     * @return
+     */
     public static String executeFunction(List<Token> tokens) {
         String nombreFuncion = "";
         String resultado = "";
@@ -215,7 +246,8 @@ public class defun {
 
                     for (int i = 2; i < tokens.size(); i++) {
                         if (tokens.get(i).type.equals(Token.TokenType.NUMBER)
-                                || tokens.get(i).type.equals(Token.TokenType.IDENTIFIER)) { // acepta numero y variables como parametro
+                                || tokens.get(i).type.equals(Token.TokenType.IDENTIFIER)) { // acepta numero y variables
+                                                                                            // como parametro
                             Lparametros.add(tokens.get(i));
                         }
                     }
@@ -225,7 +257,7 @@ public class defun {
                         // Asignacion de parametros a la definicion de la funcion
                         for (int i = 0; i < function.getParameters().size(); i++) {
                             function.getParameters().get(i).value = Lparametros.get(i).value;
-                            if(function.estado == 0){
+                            if (function.estado == 0) {
                                 function.getParameters().get(i).value2 = Lparametros.get(i).value;
                                 function.getParameters().get(i).value3 = Lparametros.get(i).value;
                             }
@@ -241,11 +273,11 @@ public class defun {
                             switch (LBodyFunction.get(i).tipo) {
                                 case "EXP":
                                     resultado = executeExp(LBodyFunction.get(i), LparametrosFunction);
-                                    //System.out.println("El resulado de la función es: " + resultado);
+                                    // System.out.println("El resulado de la función es: " + resultado);
                                     break;
                                 case "COND_SIMPLE":
                                     resultado = executeCondSimple(LBodyFunction.get(i), LparametrosFunction);
-                                    //System.out.println("El resulado de la función es: " + resultado);
+                                    // System.out.println("El resulado de la función es: " + resultado);
                                     break;
                                 default:
                                     break;
@@ -253,7 +285,8 @@ public class defun {
                         }
                         return resultado;
                     } else {
-                        System.out.println("La cantidad de parametros enviadas no coincide con la cantidad definida en la función.");
+                        System.out.println(
+                                "La cantidad de parametros enviadas no coincide con la cantidad definida en la función.");
                         return "N";
                     }
 
@@ -273,13 +306,20 @@ public class defun {
 
     }
 
-    //Construye la cadena para ejecutar la expresion.
-    private static String buildExp(Node exp, List<Node> Lparam){
+    /**
+     * 
+     * @param exp    El nodo que representa la expresión a construir.
+     * @param Lparam La lista de nodos que representa los parámetros de la función.
+     * @return La cadena de la expresión construida o un mensaje de error en caso de
+     *         fallo.
+     */
+    // Construye la cadena para ejecutar la expresion.
+    private static String buildExp(Node exp, List<Node> Lparam) {
         try {
             String cadenaExpresion = "(" + exp.operador;
             boolean parametroEncontrado = false;
 
-            if(!exp.tipo.equals("EXPRESION")){
+            if (!exp.tipo.equals("EXPRESION")) {
                 if (esEntero(exp.operando1)) {
                     cadenaExpresion += " " + exp.operando1;
                 } else {
@@ -289,7 +329,7 @@ public class defun {
                             if (esEntero(node.value)) {
                                 cadenaExpresion += " " + node.value;
                                 parametroEncontrado = true;
-                            }else{
+                            } else {
                                 for (Variable variable : Instrucciones.listasDeVariables) {
                                     if (variable.getName().equals(node.value)) {
                                         cadenaExpresion += " " + variable.getValue();
@@ -315,7 +355,7 @@ public class defun {
                                     if (esEntero(node.value)) {
                                         cadenaExpresion += " " + node.value;
                                         parametroEncontrado = true;
-                                    }else{
+                                    } else {
                                         for (Variable variable : Instrucciones.listasDeVariables) {
                                             if (variable.getName().equals(node.value)) {
                                                 cadenaExpresion += " " + variable.getValue();
@@ -329,7 +369,7 @@ public class defun {
                             }
 
                             if (!parametroEncontrado) {
-                                
+
                                 return "La variable " + exp.operando2 + " no existe en ningun ambito";
                             } else {
 
@@ -342,20 +382,21 @@ public class defun {
                     cadenaExpresion += ")";
                     return cadenaExpresion;
                 }
-            }else{
-                //*********************ES UN NODE EXPRESION QUE VIENE DE UNA CONDICION COMPUESTA
+            } else {
+                // *********************ES UN NODE EXPRESION QUE VIENE DE UNA CONDICION
+                // COMPUESTA
 
                 if (exp.expresion1.tipo.equals("VAR/NUM")) {
                     if (esEntero(exp.expresion1.operando1)) {
                         cadenaExpresion += " " + exp.expresion1.operando1;
-                    }else{
+                    } else {
                         for (Node node : Lparam) {
                             if (exp.expresion1.operando1.equals(node.var)) {
-    
+
                                 if (esEntero(node.value)) {
                                     cadenaExpresion += " " + node.value;
                                     parametroEncontrado = true;
-                                }else{
+                                } else {
                                     for (Variable variable : Instrucciones.listasDeVariables) {
                                         if (variable.getName().equals(node.value)) {
                                             cadenaExpresion += " " + variable.getValue();
@@ -377,11 +418,11 @@ public class defun {
                                 } else {
                                     for (Node node : Lparam) {
                                         if (exp.expresion2.operando1.equals(node.var)) {
-        
+
                                             if (esEntero(node.value)) {
                                                 cadenaExpresion += " " + node.value;
                                                 parametroEncontrado = true;
-                                            }else{
+                                            } else {
                                                 for (Variable variable : Instrucciones.listasDeVariables) {
                                                     if (variable.getName().equals(node.value)) {
                                                         cadenaExpresion += " " + variable.getValue();
@@ -393,11 +434,11 @@ public class defun {
                                             break;
                                         }
                                     }
-        
+
                                     if (!parametroEncontrado) {
                                         return "La variable " + exp.operando2 + " no existe en ningun ambito";
                                     } else {
-        
+
                                         cadenaExpresion += ")";
                                         return cadenaExpresion;
                                     }
@@ -405,17 +446,17 @@ public class defun {
 
                                 cadenaExpresion += ")";
                                 return cadenaExpresion;
-                            }else{
-                                //EL OPERADOR 2 ES UNA FUNCION
+                            } else {
+                                // EL OPERADOR 2 ES UNA FUNCION
                                 Node invokeFunction = exp.expresion2;
                                 String Funcion = "(" + invokeFunction.nombreFuncion + " ";
                                 String cadenaExpresionParametro = "(" + invokeFunction.operador;
                                 String operando1 = getVar(invokeFunction.operando1, Lparam);
-                                String operando2= getVar(invokeFunction.operando2, Lparam);
+                                String operando2 = getVar(invokeFunction.operando2, Lparam);
 
-                                if(operando1 != null){
+                                if (operando1 != null) {
                                     cadenaExpresionParametro += " " + operando1;
-                                    if(operando2 != null){
+                                    if (operando2 != null) {
                                         cadenaExpresionParametro += " " + operando2 + ")";
                                     }
 
@@ -431,27 +472,28 @@ public class defun {
                                     cadenaExpresion += " " + resCallFunction + ")";
                                     return cadenaExpresion;
 
-                                }else{
-                                    return "El operando 1 del llamado de la funcion " + invokeFunction.nombreFuncion + " no existe";
+                                } else {
+                                    return "El operando 1 del llamado de la funcion " + invokeFunction.nombreFuncion
+                                            + " no existe";
                                 }
 
-                                
                             }
                         }
 
                     }
-                }else{
-                    //EL OPERADOR 1 ES UNA FUNCION
+                } else {
+                    // EL OPERADOR 1 ES UNA FUNCION
                     Node invokeFunction = exp.expresion1;
                     String Funcion = "(" + invokeFunction.nombreFuncion + " ";
                     Function function = funciones.getFunction(invokeFunction.nombreFuncion);
                     String cadenaExpresionParametro = "(" + invokeFunction.operador;
-                    String operando1 = /*function.estado == 1 ? function.getParameters().get(0).value2:*/ getVar(invokeFunction.operando1, Lparam);
-                    String operando2= getVar(invokeFunction.operando2, Lparam);
+                    String operando1 = /* function.estado == 1 ? function.getParameters().get(0).value2: */ getVar(
+                            invokeFunction.operando1, Lparam);
+                    String operando2 = getVar(invokeFunction.operando2, Lparam);
 
-                    if(operando1 != null){
+                    if (operando1 != null) {
                         cadenaExpresionParametro += " " + operando1;
-                        if(operando2 != null){
+                        if (operando2 != null) {
                             cadenaExpresionParametro += " " + operando2 + ")";
                         }
 
@@ -463,20 +505,21 @@ public class defun {
                         Funcion += resultadoParametros + ")";
                         newInput = LispTokenizer.tokenize(Funcion);
 
-                        String resCallFunction=""; 
-                        if(!invokeFunction.nombreFuncion.contains("fibonacci")){
+                        String resCallFunction = "";
+                        if (!invokeFunction.nombreFuncion.contains("fibonacci")) {
                             resCallFunction = executeFunction(newInput);
-                            cadenaExpresion += " "+ resCallFunction;
-                        }else{
-                            if(Integer.parseInt(resultadoParametros)<= 0){
+                            cadenaExpresion += " " + resCallFunction;
+                        } else {
+                            if (Integer.parseInt(resultadoParametros) <= 0) {
                                 cadenaExpresion += " 0";
-                            }else{
-                                resCallFunction = String.valueOf(executeSpecialRecursiveFuction(Integer.parseInt(resultadoParametros)));
-                                cadenaExpresion += " "+ resCallFunction;
+                            } else {
+                                resCallFunction = String
+                                        .valueOf(executeSpecialRecursiveFuction(Integer.parseInt(resultadoParametros)));
+                                cadenaExpresion += " " + resCallFunction;
                             }
                         }
                     }
-                    //----------------VALIDAR EL OPERADOR 2----------------
+                    // ----------------VALIDAR EL OPERADOR 2----------------
                     if (exp.expresion2.tipo.equals("VAR/NUM")) {
                         if (esEntero(exp.expresion2.operando1)) {
                             cadenaExpresion += " " + exp.expresion2.operando1;
@@ -487,7 +530,7 @@ public class defun {
                                     if (esEntero(node.value)) {
                                         cadenaExpresion += " " + node.value;
                                         parametroEncontrado = true;
-                                    }else{
+                                    } else {
                                         for (Variable variable : Instrucciones.listasDeVariables) {
                                             if (variable.getName().equals(node.value)) {
                                                 cadenaExpresion += " " + variable.getValue();
@@ -510,26 +553,27 @@ public class defun {
 
                         cadenaExpresion += ")";
                         return cadenaExpresion;
-                    }else{
-                        //EL OPERADOR 2 ES UNA FUNCION
+                    } else {
+                        // EL OPERADOR 2 ES UNA FUNCION
                         Node invokeFunction2 = exp.expresion2;
                         function = funciones.getFunction(invokeFunction2.nombreFuncion);
                         String Funcion2 = "(" + invokeFunction2.nombreFuncion + " ";
                         String cadenaExpresionParametro2 = "(" + invokeFunction2.operador;
-                        String operando1_1 = function.estado == 1 ? function.getParameters().get(0).value3: getVar(invokeFunction2.operando1, Lparam);
+                        String operando1_1 = function.estado == 1 ? function.getParameters().get(0).value3
+                                : getVar(invokeFunction2.operando1, Lparam);
                         String operando2_2 = getVar(invokeFunction2.operando2, Lparam);
 
-                        if(operando1_1 != null){
+                        if (operando1_1 != null) {
                             cadenaExpresionParametro2 += " " + operando1_1;
-                            if(operando2_2 != null){
+                            if (operando2_2 != null) {
                                 cadenaExpresionParametro2 += " " + operando2_2 + ")";
                             }
 
                             ArrayList<String> Lista = builStringToListExp(cadenaExpresionParametro2);
 
                             String resultadoParametros = Calculadora.calculadoraOperaciones(Lista);
-                            
-                            if(function.estado == 1){
+
+                            if (function.estado == 1) {
                                 function.getParameters().get(0).value3 = resultadoParametros;
                             }
 
@@ -538,28 +582,30 @@ public class defun {
                             Funcion2 += resultadoParametros + ")";
                             newInput = LispTokenizer.tokenize(Funcion2);
 
-                            String resCallFunction=""; 
-                            if(!invokeFunction2.nombreFuncion.contains("fibonacci")){
+                            String resCallFunction = "";
+                            if (!invokeFunction2.nombreFuncion.contains("fibonacci")) {
                                 resCallFunction = executeFunction(newInput);
-                                cadenaExpresion += " "+ resCallFunction +")";
-                            }else{
-                                if(Integer.parseInt(resultadoParametros)<= 0){
+                                cadenaExpresion += " " + resCallFunction + ")";
+                            } else {
+                                if (Integer.parseInt(resultadoParametros) <= 0) {
                                     cadenaExpresion += " 0)";
-                                }else{
-                                    resCallFunction = String.valueOf(executeSpecialRecursiveFuction(Integer.parseInt(resultadoParametros)));
-                                    cadenaExpresion += " "+ resCallFunction +")";
+                                } else {
+                                    resCallFunction = String.valueOf(
+                                            executeSpecialRecursiveFuction(Integer.parseInt(resultadoParametros)));
+                                    cadenaExpresion += " " + resCallFunction + ")";
                                 }
                             }
-                            
+
                             function.estado = 0;
                             return cadenaExpresion;
 
-                        }else{
-                            return "El operandor 2 del llamado de la funcion " + invokeFunction2.nombreFuncion + " no existe";
+                        } else {
+                            return "El operandor 2 del llamado de la funcion " + invokeFunction2.nombreFuncion
+                                    + " no existe";
                         }
                     }
                 }
-                
+
             }
             System.out.println("Error al construir la expresión.");
             return null;
@@ -569,27 +615,41 @@ public class defun {
         }
     }
 
+    /**
+     * @param exp    El nodo que representa la expresión a ejecutar.
+     * @param Lparam La lista de nodos que representa los parámetros de la función.
+     * @return El resultado de la evaluación de la expresión o un mensaje de error
+     *         en caso de fallo.
+     */
     public static String executeExp(Node exp, List<Node> Lparam) {
         try {
             String cadenaExpresion = buildExp(exp, Lparam);
 
-            if(cadenaExpresion != null){
+            if (cadenaExpresion != null) {
                 // Se realizar el casteo a la cadena expresión
                 // Construir números completos
                 ArrayList<String> arrayList = builStringToListExp(cadenaExpresion);
 
                 return Calculadora.calculadoraOperaciones(arrayList);
             }
-            
+
             return "Error al evaluar la expresion";
-            
+
         } catch (Exception e) {
             System.out.println("Error al ejecutar la expresion desde la funcion.");
             return "";
         }
     }
 
-    private static String getVar(String varB, List<Node> Lparam){
+    /**
+     * Obtiene el valor de la variable especificada por el nombre desde la lista de
+     * parámetros.
+     *
+     * @param varB   El nombre de la variable a obtener.
+     * @param Lparam La lista de nodos que representa los parámetros de la función.
+     * @return El valor de la variable o `null` si la variable no existe.
+     */
+    private static String getVar(String varB, List<Node> Lparam) {
         if (esEntero(varB)) {
             return varB;
         } else {
@@ -597,7 +657,7 @@ public class defun {
                 if (varB.equals(node.var)) {
                     if (esEntero(node.value)) {
                         return node.value;
-                    }else{
+                    } else {
                         for (Variable variable : Instrucciones.listasDeVariables) {
                             if (variable.getName().equals(node.value)) {
                                 return variable.getValue().toString();
@@ -612,122 +672,149 @@ public class defun {
         }
     }
 
+    /**
+     * Ejecuta una condición simple representada por el nodo dado y la lista de
+     * parámetros proporcionada.
+     *
+     * @param exp    El nodo que representa la condición simple a ejecutar.
+     * @param Lparam La lista de nodos que representa los parámetros de la función.
+     * @return El resultado de la evaluación de la condición o una cadena vacía si
+     *         no se cumple ninguna condición.
+     */
     public static String executeCondSimple(Node exp, List<Node> Lparam) {
         try {
             String cadenaExpresion = buildExp(exp, Lparam);
             String resCondicion = getVar(exp.resultadoCond, Lparam);
             String resEv = "";
 
-            if(resCondicion != null){
-                cadenaExpresion = "(cond "+ cadenaExpresion + " " + resCondicion +" )";
+            if (resCondicion != null) {
+                cadenaExpresion = "(cond " + cadenaExpresion + " " + resCondicion + " )";
                 List<Token> tokensCondicionSimple = LispTokenizer.tokenize(cadenaExpresion);
 
                 Token resultEvauacion = Conditionals.sintaxisCond(tokensCondicionSimple);
 
-                //verifico si la condicion se cumplio
-                if(resultEvauacion == null){
-                    //la condicion no se cumplio y valido si tiene hijos
-                    if(exp.condicionesHijas.size() > 0){
+                // verifico si la condicion se cumplio
+                if (resultEvauacion == null) {
+                    // la condicion no se cumplio y valido si tiene hijos
+                    if (exp.condicionesHijas.size() > 0) {
 
                         for (Node condHija : exp.condicionesHijas) {
-                            //Valido el tipo de condicion
-                            if(condHija.tipo.equals("COND_SIMPLE")){
+                            // Valido el tipo de condicion
+                            if (condHija.tipo.equals("COND_SIMPLE")) {
                                 resEv = executeCondSimple(condHija, Lparam);
-                                if(resEv != ""){
+                                if (resEv != "") {
                                     return resEv;
                                 }
-                                
-                            }else{
-                                //es una condicion compuesta
+
+                            } else {
+                                // es una condicion compuesta
                                 resEv = executeCondCompuesta(condHija, Lparam, exp);
-                                if(resEv != ""){
+                                if (resEv != "") {
                                     return resEv;
                                 }
                             }
                         }
-                        
+
                         return "";
-                        
-                    }else{
+
+                    } else {
                         return "La condicion no se cumplio y no hay mas casos que evaluar.";
                     }
 
-                }else{
+                } else {
                     return resultEvauacion.value;
                 }
-            }else{
+            } else {
 
-                //Validar si es una funcion la respuesta de condicion
+                // Validar si es una funcion la respuesta de condicion
                 return "El resultado de la condicion no se pudo leer";
             }
-            
+
         } catch (Exception e) {
-            //System.out.println("Error al ejecutar la condicion simple desde la funcion.");
+            // System.out.println("Error al ejecutar la condicion simple desde la
+            // funcion.");
             return "";
         }
     }
 
+    /**
+     * Ejecuta una condición compuesta representada por el nodo dado y la lista de
+     * parámetros proporcionada.
+     *
+     * @param exp    El nodo que representa la condición compuesta a ejecutar.
+     * @param Lparam La lista de nodos que representa los parámetros de la función.
+     * @param padre  El nodo padre que contiene la condición compuesta.
+     * @return El resultado de la evaluación de la condición o una cadena vacía si
+     *         no se cumple ninguna condición.
+     */
     public static String executeCondCompuesta(Node exp, List<Node> Lparam, Node padre) {
         try {
             String cadenaExpresion = buildExp(exp, Lparam);
             String resCondicion = buildExp(exp.resultadoExpre, Lparam);
-            String resEv ="";
+            String resEv = "";
 
-            if(resCondicion != null){
-                
+            if (resCondicion != null) {
+
                 ArrayList<String> arrayList = builStringToListExp(resCondicion);
                 resCondicion = Calculadora.calculadoraOperaciones(arrayList);
 
-                cadenaExpresion = "(cond "+ cadenaExpresion + " " + resCondicion +" )";
+                cadenaExpresion = "(cond " + cadenaExpresion + " " + resCondicion + " )";
                 List<Token> tokensCondicionSimple = LispTokenizer.tokenize(cadenaExpresion);
 
                 Token resultEvauacion = Conditionals.sintaxisCond(tokensCondicionSimple);
 
-                //verifico si la condicion se cumplio
-                if(resultEvauacion == null){
-                    //la condicion no se cumplio y valido si tiene hijos
-                    if(padre.condicionesHijas.size() > 0){
+                // verifico si la condicion se cumplio
+                if (resultEvauacion == null) {
+                    // la condicion no se cumplio y valido si tiene hijos
+                    if (padre.condicionesHijas.size() > 0) {
 
                         for (Node condHija : exp.condicionesHijas) {
-                            //Valido el tipo de condicion
-                            if(condHija.tipo.equals("COND_SIMPLE")){
-                                
+                            // Valido el tipo de condicion
+                            if (condHija.tipo.equals("COND_SIMPLE")) {
+
                                 resEv = executeCondSimple(condHija, Lparam);
-                                if(resEv != ""){
+                                if (resEv != "") {
                                     return resEv;
                                 }
-                            }else{
-                                //es una condicion compuesta
+                            } else {
+                                // es una condicion compuesta
                                 resEv = executeCondCompuesta(condHija, Lparam, padre);
-                                if(resEv != ""){
+                                if (resEv != "") {
                                     return resEv;
                                 }
                             }
                         }
-                        
+
                         return "";
-                        
-                    }else{
+
+                    } else {
                         return "La condicion no se cumplio y no hay mas casos que evaluar.";
                     }
 
-                }else{
+                } else {
                     return resultEvauacion.value;
                 }
-            }else{
+            } else {
 
-                //Validar si es una funcion la respuesta de condicion
+                // Validar si es una funcion la respuesta de condicion
                 return "El resultado de la condicion no se pudo leer";
             }
 
-            //return "Hubo una incosistencia en la ejecución de la condicion compuesta.";
+            // return "Hubo una incosistencia en la ejecución de la condicion compuesta.";
         } catch (Exception e) {
             System.out.println("Error al ejecutar la condicion compuesta desde la funcion.");
             return "";
         }
     }
 
-    private static ArrayList<String> builStringToListExp(String cadenaExpresion){
+    /**
+     * Convierte una cadena de expresión en una lista de operaciones para su
+     * posterior evaluación.
+     *
+     * @param cadenaExpresion La cadena de expresión a convertir.
+     * @return Una lista de operaciones de la expresión.
+     */
+    private static ArrayList<String> builStringToListExp(String cadenaExpresion) {
         ArrayList<String> arrayList = new ArrayList<>();
         StringBuilder currentNumber = new StringBuilder();
         for (char c : cadenaExpresion.toCharArray()) {
@@ -750,6 +837,12 @@ public class defun {
         return arrayList;
     }
 
+    /**
+     * Ejecuta una función especial recursiva para calcular el término Fibonacci.
+     *
+     * @param n El término de Fibonacci a calcular.
+     * @return El resultado del término Fibonacci.
+     */
     public static int executeSpecialRecursiveFuction(int n) {
         if (n <= 1) {
             return n;
@@ -758,6 +851,12 @@ public class defun {
         }
     }
 
+    /**
+     * Verifica si una cadena puede ser convertida a un número entero.
+     *
+     * @param str La cadena a verificar.
+     * @return `true` si la cadena es un número entero; `false` en caso contrario.
+     */
     public static boolean esEntero(String str) {
         try {
             Integer.parseInt(str);

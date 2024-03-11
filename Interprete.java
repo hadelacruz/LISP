@@ -3,9 +3,20 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+/**
+ * La clase {@code Interprete} proporciona métodos para la interpretación y
+ * ejecución de expresiones
+ * en un lenguaje de programación Lisp simplificado.
+ */
 public class Interprete {
 
-    // Validar parentesis
+    /**
+     * Valida la correcta estructura de paréntesis en una expresión.
+     *
+     * @param input La expresión a validar.
+     * @return {@code true} si la estructura de paréntesis es correcta,
+     *         {@code false} de lo contrario.
+     */
     public static boolean validarParentesis(String input) {
         // Pila de paréntesis
         Deque<String> stack = new ArrayDeque<>();
@@ -47,6 +58,12 @@ public class Interprete {
 
     static ArrayList<Variable> listasDeVariables = Instrucciones.listasDeVariables;
 
+    /**
+     * Interpreta y ejecuta una lista de tokens.
+     *
+     * @param tokens Lista de tokens que representa una expresión en el lenguaje
+     *               Lisp simplificado.
+     */
     public static void interpreteListTokens(List<Token> tokens) {
         for (Token token : tokens) {
             boolean caseEvaluated = false;

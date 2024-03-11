@@ -1,5 +1,8 @@
 import java.util.List;
-
+/**
+ * La clase {@code Node} representa un nodo en la estructura del árbol sintáctico utilizado por el intérprete Lisp.
+ * Cada nodo puede tener diferentes propiedades dependiendo de su tipo, como operadores, operandos, valores, variables y más.
+ */
 public class Node {
     String tipo;
     String operador;

@@ -2,10 +2,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * La clase {@code Instrucciones} contiene métodos estáticos que implementan la
+ * lógica de ejecución
+ * de instrucciones específicas en el lenguaje de programación.
+ */
 public class Instrucciones {
 
+    // Lista de variables utilizada para almacenar variables definidas durante la
+    // ejecución del programa.
     public static ArrayList<Variable> listasDeVariables = new ArrayList<>();
 
+    /**
+     * Implementación de la sintaxis SETQ para la asignación de valores a variables.
+     *
+     * @param tokens Lista de tokens que representan la expresión SETQ.
+     * @param <T>    Tipo de elementos en la lista de tokens.
+     */
     public static <T> void sintaxisSetq(List<Token> tokens) {
         Stack<Token> stack = new Stack<>();
         try {
@@ -37,8 +50,9 @@ public class Instrucciones {
                                 if (verficador == false) {
                                     switch (valorVariable.type) { // Validar qué tipo de dato es la variable
                                         case NUMBER:
-                                            listasDeVariables.add(new Variable(nombreVariable.value, Integer.parseInt(valorVariable.value)));
-                                            //System.out.println(listasDeVariables.toString());
+                                            listasDeVariables.add(new Variable(nombreVariable.value,
+                                                    Integer.parseInt(valorVariable.value)));
+                                            // System.out.println(listasDeVariables.toString());
                                             System.out.println("Variable guardado exitosamente");
                                             break;
 
@@ -78,23 +92,26 @@ public class Instrucciones {
         }
     }
 
-    public static<T> void sintaxisQuote(List<Token> tokens) {
+    /**
+     * Implementación de la sintaxis QUOTE para la impresión de elementos sin
+     * evaluar.
+     *
+     * @param tokens Lista de tokens que representan la expresión QUOTE.
+     * @param <T>    Tipo de elementos en la lista de tokens.
+     */
+    public static <T> void sintaxisQuote(List<Token> tokens) {
         ArrayList<Token> lista = new ArrayList<>(tokens);
-        
-         
-                if (lista.get(1).type == Token.guessTokenType("QUOTE")) {
-                    for (int i = 2; i < lista.size() - 1; i++) {
 
-                        // Imprimir el elemento en la posición i
-                        System.out.print( lista.get(i).value + " ");
-                    }
-                    System.out.println();
-                } else {
-                    System.out.println("Sintaxis Quote invalida");
-                }
-           
+        if (lista.get(1).type == Token.guessTokenType("QUOTE")) {
+            for (int i = 2; i < lista.size() - 1; i++) {
+
+                // Imprimir el elemento en la posición i
+                System.out.print(lista.get(i).value + " ");
+            }
+            System.out.println();
+        } else {
+            System.out.println("Sintaxis Quote invalida");
         }
-    }   
 
-
-    
+    }
+}
